@@ -180,6 +180,7 @@ body {
     text-align: center;
     position: relative;
     z-index: 5;
+    margin-top: 4vh;
 }
 .cover-title {
     font-family: var(--font-marker);
@@ -670,13 +671,32 @@ body {
 .tl-col .tl-flag { font-family: var(--font-comic); font-size: 0.78rem; letter-spacing: 0.12em; opacity: 0.65; display: block; margin-bottom: 2px; }
 
 .budget-rows { display: flex; flex-direction: column; gap: 14px; max-width: 820px; margin: 0 auto; width: 100%; }
-.budget-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); background: var(--cream); padding: 14px 20px; }
-.budget-row .b-label { font-family: var(--font-comic); font-size: clamp(0.95rem,2.3vw,1.4rem); }
-.budget-row .b-val { font-family: var(--font-marker); font-size: clamp(1.3rem,3.4vw,2.2rem); color: var(--red); text-align: right; }
-.budget-row.total { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-.budget-row.total .b-label { color: var(--cream); }
-.budget-row.total .b-val { color: var(--red); }
-.budget-row.funded .b-val { color: var(--green); }
+.budget-sub { font-family: var(--font-caveat); font-size: clamp(1rem,2.4vw,1.5rem); opacity: 0.8; max-width: 820px; margin: 16px auto 0; text-align: center; line-height: 1.5; }
+
+/* ===== budget graphic-novel table ===== */
+.budget-table-wrap {
+  display: grid; grid-template-columns: minmax(0,0.85fr) minmax(0,1.15fr);
+  gap: 22px; max-width: 980px; margin: 22px auto 0; width: 100%; text-align: left;
+}
+@media (max-width: 820px){ .budget-table-wrap{ grid-template-columns: 1fr; } }
+.budget-col {
+  border: 4px solid var(--ink); background: var(--cream);
+  box-shadow: 6px 6px 0 var(--ink); overflow: hidden; display: flex; flex-direction: column;
+}
+.bt-table { width: 100%; }
+.bt-head {
+  font-family: var(--font-marker); font-size: clamp(0.9rem,2.2vw,1.2rem);
+  letter-spacing: 0.06em; padding: 12px 18px; text-align: left;
+}
+.bt-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 12px 18px; border-top: 3px dashed rgba(26,26,26,0.18);
+}
+.bt-row .bt-label { font-family: var(--font-comic); font-size: clamp(0.8rem,1.9vw,1.05rem); line-height: 1.25; }
+.bt-row .bt-val  { font-family: var(--font-marker); font-size: clamp(0.95rem,2.3vw,1.4rem); color: var(--red); white-space: nowrap; }
+.bt-row.funded .bt-val { color: var(--green); }
+.bt-row.sub { background: var(--paper); }
+.bt-table.full .bt-row .bt-label { font-size: clamp(0.78rem,1.8vw,1rem); }
 .story-band { max-width: 920px; margin: 0 auto; width: 100%; }
 .budget-sub { font-family: var(--font-caveat); font-size: clamp(1rem,2.4vw,1.5rem); opacity: 0.8; max-width: 820px; margin: 16px auto 0; text-align: center; line-height: 1.5; }
 
@@ -754,6 +774,11 @@ body {
   font-size:clamp(0.8rem,1.8vw,1.05rem); padding:26px 10px 7px; line-height:1.2;
 }
 
+#scene-world { overflow:hidden; }
+#scene-world .world-tile { border-color: var(--cream); box-shadow: 6px 6px 0 rgba(0,0,0,0.6); background:#000; }
+#scene-world .world-tile img { height:230px; object-fit:cover; }
+@media (max-width: 820px){ #scene-world .world-tile img{ height:170px; } }
+
 /* Sample / reel CTA */
 .sample-cta { max-width:720px; margin:0 auto; width:100%; text-align:center; }
 .sample-box {
@@ -803,7 +828,7 @@ body {
         <img src="assets/stills/opt/cover-mrblack.jpg" alt="Mr. Black, a street dog, at night">
     </div>
     <div class="cover-title-block">
-        <h1 class="cover-title">STREET<span class="word2"><span class="lt">G</span>O<span class="lt">D</span>S</span></h1>
+        <h1 class="cover-title">STREET<span class="word2">G<span class="lt">O</span>D<span class="lt">S</span></span></h1>
         <p class="cover-subtitle">THE PITCH DECK</p>
         <p class="cover-credits">A 70-minute cinema verite documentary &middot; Directed by Akash Girish &middot; Mr.B Films &middot; India &middot; 2028</p>
     </div>
@@ -816,7 +841,7 @@ body {
 <!-- ================================================================ -->
 <!-- DECK SCENE 1 : THE LOGLINE                                            -->
 <section class="scene" id="scene-logon">
-    <div class="scatter-dog anim-wag" style="bottom:4%;right:2%;width:118px;"><img src="assets/dogs/dog-01-chibi.png"></div>
+    <div class="scatter-dog anim-wag" style="top:18%;right:2.5%;width:clamp(180px,24vw,320px);"><img src="assets/dogs/dog-01-chibi.png"></div>
     <div class="logon-cover deck-center">
         <span class="chapter-tag">SLIDE 01 &middot; THE LOGLINE</span>
         <div class="love-box" style="max-width:760px;margin:0 auto;">
@@ -866,6 +891,7 @@ body {
             <span class="chapter-tag">SLIDE 03 &middot; THE SCALE</span>
             <h2 class="scene-heading">The stakes aren&rsquo;t tiny.</h2>
             <p style="font-family:var(--font-caveat);font-size:clamp(1.2rem,2.7vw,1.8rem);margin-top:11px;opacity:0.72;max-width:340px;">The official estimate is a work of fiction. But every number is staggering.</p>
+            <div class="dog-char dog-lg anim-wag" data-scene="numbers" style="margin-top:26px;"><img src="assets/dogs/dog-06-sniffing.png" alt="Sniffing dog"></div>
         </div>
         <div class="numbers-right">
             <div class="stat-panels">
@@ -875,12 +901,11 @@ body {
                 <div class="panel panel-paper stat-panel"><div class="stat-num" style="color:var(--red);" data-target="34" data-suffix="%">0</div><div class="stat-label">Vaccination coverage achieved</div></div>
                 <div class="panel panel-blue stat-panel" style="grid-column:span 2;"><div class="stat-num" data-target="8000" data-suffix="">0</div><div class="stat-label">Years of the Pariah</div></div>
             </div>
-            <div style="display:flex;justify-content:center;align-items:flex-end;gap:16px;">
-                <div class="dog-char dog-lg anim-wag" data-scene="numbers"><img src="assets/dogs/dog-06-sniffing.png" alt="Sniffing dog"></div>
-            <div class="photo-panel rotate-right" style="max-width:340px;margin:0;">
-                <img src="assets/stills/opt/night-dogs-crossing.jpg" alt="Dogs crossing a road at night" style="height:170px;">
-                <div class="photo-cap" style="font-size:0.8rem;">They own the night</div>
-            </div>
+            <div style="display:flex;justify-content:center;margin-top:22px;">
+                <div class="photo-panel rotate-right" style="max-width:460px;margin:0 auto;">
+                    <img src="assets/stills/stakes.jpg" alt="Street dogs, small on the street" style="height:220px;">
+                    <div class="photo-cap" style="font-size:0.9rem;">They may be tiny, but the stakes aren&rsquo;t!</div>
+                </div>
             </div>
         </div>
     </div>
@@ -903,29 +928,27 @@ body {
 </section>
 
 <!-- SLIDE 03B : THE WORLD (still montage) -->
-<section class="scene" id="scene-world" style="min-height:100vh;">
+<section class="scene" id="scene-world" style="min-height:100vh;background:var(--ink);">
     <div class="world-montage">
-        <span class="chapter-tag">THE WORLD OF STREET GODS</span>
-        <h2 class="scene-heading">Step into the streets.</h2>
-        <p class="deck-sub" style="max-width:660px;margin:0 auto 6px;text-align:center;">Chennai at night. The dogs, the feeders, the rescues, the fight for a life. This is the world the camera breathes.</p>
-        <div class="world-strip" style="grid-template-columns:repeat(4,1fr);gap:18px;">
-            <div class="world-tile"><img src="assets/stills/opt/night-blackdog-street.jpg" alt="Night in Chennai"><div class="tile-cap">Night in Chennai</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/day-feeding-two-women.jpg" alt="Vaccination Day"><div class="tile-cap">Vaccination Day</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/night-rickshaw-feed.jpg" alt="The night round"><div class="tile-cap">The night round</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/shelter-yard.jpg" alt="The shelter"><div class="tile-cap">The shelter</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/protest-community.jpg" alt="The Fight"><div class="tile-cap">The Fight</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/night-dogs-crossing.jpg" alt="They own the night"><div class="tile-cap">They own the night</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/protest-mic.jpg" alt="The Goal"><div class="tile-cap">The Goal</div></div>
-            <div class="world-tile"><img src="assets/stills/opt/intimate-tattoo-hand.jpg" alt="The look of love"><div class="tile-cap">The look of love</div></div>
+        <span class="chapter-tag" style="background:var(--ink);color:var(--cream);border-color:var(--cream);box-shadow:3px 3px 0 var(--red);">THE WORLD OF STREET GODS</span>
+        <h2 class="scene-heading" style="color:var(--cream);text-shadow:3px 3px 0 var(--red);">Step into the streets.</h2>
+        <p class="deck-sub" style="max-width:660px;margin:0 auto 6px;text-align:center;color:var(--cream);opacity:0.92;font-size:clamp(0.85rem,1.8vw,1.1rem);">Chennai at night. The dogs, the feeders, the rescues, the fight for a life. This is the world the camera breathes.</p>
+        <div class="world-strip" style="grid-template-columns:repeat(4,1fr);gap:16px;">
+            <div class="world-tile"><img src="assets/stills/opt/night-blackdog-street.jpg" alt="Night in Chennai" style="height:230px;"><div class="tile-cap">Night in Chennai</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/day-feeding-two-women.jpg" alt="Vaccination Day" style="height:230px;"><div class="tile-cap">Vaccination Day</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/night-rickshaw-feed.jpg" alt="The night round" style="height:230px;"><div class="tile-cap">The night round</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/shelter-yard.jpg" alt="The shelter" style="height:230px;"><div class="tile-cap">The shelter</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/protest-community.jpg" alt="The Fight" style="height:230px;"><div class="tile-cap">The Fight</div></div>
+            <div class="world-tile"><img src="assets/stills/innocence.jpg" alt="The look of innocence" style="height:230px;"><div class="tile-cap">The look of innocence</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/protest-mic.jpg" alt="The Goal" style="height:230px;"><div class="tile-cap">The Goal</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/intimate-tattoo-hand.jpg" alt="The look of love" style="height:230px;"><div class="tile-cap">The look of love</div></div>
         </div>
-        <p class="deck-sub" style="text-align:center;font-style:italic;margin-top:14px;">Eight thousand years on these streets. The film opens its door here.</p>
+        <p class="deck-sub" style="text-align:center;font-style:italic;margin-top:14px;color:var(--cream);opacity:0.8;font-size:clamp(0.85rem,1.8vw,1.1rem);">Eight thousand years on these streets. The film opens its door here.</p>
     </div>
 </section>
 
 <!-- SLIDE 04 : THE JOURNEY BEGINS -->
 <section class="scene" id="scene-origin">
-    <div class="scatter-dog anim-tilt" style="top:7%;left:2%;width:116px;"><img src="assets/dogs/dog-02-tilt.png"></div>
-    <div class="scatter-dog anim-float" style="bottom:6%;right:2%;width:108px;"><img src="assets/dogs/dog-04-dachshund.png"></div>
     <div class="why-col">
         <span class="chapter-tag">SLIDE 04 &middot; THE JOURNEY BEGINS</span>
         <div class="story-panel">
@@ -970,7 +993,7 @@ body {
 <section class="scene" id="scene-opposetruth">
     <div class="story-band">
         <span class="chapter-tag">SLIDE 06 &middot; THE OTHER SIDE OF THE STREET</span>
-        <h2 class="scene-heading" style="text-align:center;">No hero. No villain. Yet.</h2>
+        <h2 class="scene-heading" style="text-align:center;">No hero. No villain.</h2>
         <div class="story-panel">
             <div class="highlight-line" style="color:var(--blue);">The public safety side.</div>
             <p>Their argument is nothing but facts. A child died of rabies in Delhi. In densely packed Indian neighbourhoods, children and the elderly live with a real threat. Countries have eliminated rabies within their borders; India has not. As long as the disease exists, they argue, dogs have no place in the middle of modern society.</p>
@@ -979,9 +1002,9 @@ body {
         </div>
         <p class="deck-sub" style="text-align:center;">Animal activists vs. public safety. Neither side is wrong.</p>
         <div style="display:flex;justify-content:center;margin-top:22px;">
-            <div class="photo-panel" style="max-width:540px;">
-                <img src="assets/stills/opt/protest-crowd.jpg" alt="A crowd gathered over street dog policy">
-                <div class="photo-cap"><b>THE FEAR IS REAL</b> ,  two legitimate truths, colliding on the same street.</div>
+            <div class="photo-panel" style="max-width:820px;">
+                        <img src="assets/stills/opt/protest-crowd.jpg" alt="Animal rights activists campaigning against rabies in Chennai">
+                        <div class="photo-cap"><b>ANIMAL RIGHTS ACTIVISTS</b> ,  campaigning for the elimination of rabies in Chennai.</div>
             </div>
         </div>
     </div>
@@ -989,8 +1012,8 @@ body {
 
 <!-- SLIDE 07 : THE CRISIS -->
 <section class="scene" id="scene-crisis">
-    <div class="scatter-dog anim-wobble" style="bottom:8%;left:4%;width:168px;"><img src="assets/dogs/dog-09-puppy.png"></div>
-    <div class="scatter-dog anim-float" style="top:12%;left:5%;width:152px;"><img src="assets/dogs/dog-03-sad.png"></div>
+    <div class="scatter-dog anim-wobble" style="bottom:8%;left:4%;width:196px;"><img src="assets/dogs/dog-09-puppy.png"></div>
+    <div class="scatter-dog anim-float" style="top:12%;left:5%;width:176px;"><img src="assets/dogs/dog-03-sad.png"></div>
     <div class="crisis-grid">
         <div></div>
         <div class="crisis-panel">
@@ -1002,7 +1025,9 @@ body {
             </div>
             <p style="margin-top:26px;">The Supreme Court promised control. What followed was chaos.</p>
             <p>My own family felt it. Our own street dogs, neutered, vaccinated, never aggressive ,  suddenly the whole neighbourhood demanded they be taken to the pounds.</p>
-            <p style="font-weight:700;text-decoration:underline;margin-top:12px;">I saw, first hand, how misinformation bakes into real fear.</p>
+                        <div class="quote-box" style="margin-top:16px;background:var(--cream);border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:16px 20px;transform:rotate(-0.6deg);">
+                            <p style="font-family:var(--font-marker);font-size:clamp(1rem,2.4vw,1.5rem);font-weight:700;color:var(--red);text-decoration:none;">I saw, first hand, how misinformation bakes into real fear.</p>
+                        </div>
         </div>
     </div>
 </section>
@@ -1094,8 +1119,8 @@ body {
 </section>
 
 <!-- SLIDE 11 : KEY CREATIVE TEAM -->
-<section class="scene" id="scene-team">
-    <div class="deck-center">
+<section class="scene" id="scene-team" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="deck-center" style="width:100%;text-align:center;">
         <span class="chapter-tag">SLIDE 12 &middot; KEY CREATIVE TEAM</span>
         <h2 class="scene-heading">The hands on the film.</h2>
         <div class="team-grid">
@@ -1115,14 +1140,18 @@ body {
                 <p>Madras Film Institute alumnus. Production sound mixer on Hindi projects, live-audio expert. Studio in Mumbai, ready to craft the chaos of Chennai&rsquo;s streets.</p>
             </div>
         </div>
+        <div style="display:flex;justify-content:center;align-items:flex-end;margin-top:44px;">
+            <div class="scatter-dog" style="position:static;float:none;width:clamp(160px,20vw,260px);"><img src="assets/dogs/team-dog.png"></div>
+        </div>
     </div>
 </section>
 
 <!-- SLIDE 12 : TIMELINE & STATUS -->
 <section class="scene" id="scene-timeline">
+    <div class="scatter-dog anim-float" style="top:50%;right:3%;width:clamp(150px,20vw,270px);"><img src="assets/dogs/dog-04-dachshund.png"></div>
     <div class="deck-center">
         <span class="chapter-tag">SLIDE 13 &middot; THE JOURNEY &amp; STATUS</span>
-        <h2 class="scene-heading">This film is real. It is moving.</h2>
+        <h2 class="scene-heading">Current status of the film.</h2>
         <div class="tl-wrap" style="max-width:960px;margin:0 auto;width:100%;">
             <div class="timeline-row">
                 <div class="tl-col done">
@@ -1148,35 +1177,42 @@ body {
 </section>
 
 <!-- SLIDE 13 : THE BUDGET -->
-<section class="scene" id="scene-budget">
-    <div class="deck-center">
+<section class="scene" id="scene-budget" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="deck-center" style="width:100%;text-align:center;">
         <span class="chapter-tag">SLIDE 14 &middot; THE BUDGET</span>
-        <h2 class="scene-heading">The money. Honest, of it.</h2>
-        <div class="budget-rows">
-            <div class="budget-row total"><div class="b-label">TOTAL BUDGET (Doc-Commune / PSBT)</div><div class="b-val">&#8377;1,09,54,900</div></div>
-            <div class="budget-row funded"><div class="b-label">SELF-INVESTED to date (Akash Girish)</div><div class="b-val">&#8377;2,00,000</div></div>
-            <div class="budget-row"><div class="b-label">PSBT Doc-Commune grant (requested)</div><div class="b-val">&#8377;2,00,500</div></div>
-            <div class="budget-row"><div class="b-label">Co-production / broadcaster / markets (to raise)</div><div class="b-val">&#8377;1,05,54,400</div></div>
+        <h2 class="scene-heading">What we need to make this film.</h2>
+        <div class="budget-table-wrap">
+            <div class="budget-col budget-funds">
+                <div class="bt-head" style="background:var(--red);color:var(--cream);">HOW IT&rsquo;S REQUESTED</div>
+                <div class="bt-row"><span class="bt-label">Total budget (Doc-Commune / PSBT)</span><span class="bt-val">&#8377;1,09,54,900</span></div>
+                <div class="bt-row funded"><span class="bt-label">Self-invested to date (Akash Girish)</span><span class="bt-val">&#8377;2,00,000</span></div>
+                <div class="bt-row"><span class="bt-label">PSBT Doc-Commune grant (requested)</span><span class="bt-val">&#8377;2,00,500</span></div>
+                <div class="bt-row"><span class="bt-label">Co-production / broadcaster / markets (to raise)</span><span class="bt-val">&#8377;1,05,54,400</span></div>
+            </div>
+            <div class="budget-col budget-cats">
+                <div class="bt-table full">
+                    <div class="bt-head" style="background:var(--ink);color:var(--cream);">WHERE IT GOES</div>
+                    <div class="bt-row"><span class="bt-label">A. Above the Line / Development</span><span class="bt-val">&#8377;19,63,000</span></div>
+                    <div class="bt-row"><span class="bt-label">B. Below the Line / Production</span><span class="bt-val">&#8377;19,66,000</span></div>
+                    <div class="bt-row"><span class="bt-label">C. Post-Production</span><span class="bt-val">&#8377;30,85,000</span></div>
+                    <div class="bt-row"><span class="bt-label">D. Music &amp; Rights</span><span class="bt-val">&#8377;7,50,000</span></div>
+                    <div class="bt-row"><span class="bt-label">E. Administration &amp; Overhead</span><span class="bt-val">&#8377;4,75,000</span></div>
+                    <div class="bt-row"><span class="bt-label">F. Outreach, Festivals &amp; Distribution</span><span class="bt-val">&#8377;17,20,000</span></div>
+                    <div class="bt-row sub"><span class="bt-label">Subtotal (A&ndash;F)</span><span class="bt-val">&#8377;99,59,000</span></div>
+                    <div class="bt-row sub"><span class="bt-label">Contingency (10%)</span><span class="bt-val">&#8377;9,95,900</span></div>
+                </div>
+            </div>
         </div>
-        <div class="ask-grid">
-            <div class="ask-item"><span class="a-label">A. Above the Line / Development (incl. fundraising travel)</span><span class="a-val">&#8377;19,63,000</span></div>
-            <div class="ask-item"><span class="a-label">B. Below the Line / Production (Chennai + Telangana)</span><span class="a-val">&#8377;19,66,000</span></div>
-            <div class="ask-item"><span class="a-label">C. Post-Production (incl. subtitles, accessibility)</span><span class="a-val">&#8377;30,85,000</span></div>
-            <div class="ask-item"><span class="a-label">D. Music &amp; Rights</span><span class="a-val">&#8377;7,50,000</span></div>
-            <div class="ask-item"><span class="a-label">E. Administration &amp; Overhead</span><span class="a-val">&#8377;4,75,000</span></div>
-            <div class="ask-item"><span class="a-label">F. Outreach, Festivals, Markets &amp; Distribution</span><span class="a-val">&#8377;17,20,000</span></div>
-            <div class="ask-item"><span class="a-label">Contingency (10%)</span><span class="a-val">&#8377;9,95,900</span></div>
-            <div class="ask-item"><span class="a-label">Subtotal (A&ndash;F)</span><span class="a-val">&#8377;99,59,000</span></div>
-        </div>
-        <p class="budget-sub">Only people&rsquo;s payments carry exact values. Production and equipment costs are working estimates under a 10% contingency ,  honest to Indian ground reality.</p>
     </div>
 </section>
 
 <!-- SLIDE 14 : FINANCING & REACH -->
 <section class="scene" id="scene-fiance">
+    <div class="scatter-dog anim-wobble" style="top:50%;left:2.5%;width:clamp(96px,13vw,180px);"><img src="assets/dogs/dog-08-greyhound.png"></div>
+    <div class="scatter-dog anim-float" style="top:50%;right:2.5%;width:clamp(96px,13vw,180px);"><img src="assets/dogs/dog-10-bulldog.png"></div>
     <div class="story-band">
         <span class="chapter-tag">SLIDE 15 &middot; FINANCING &amp; REACH</span>
-        <h2 class="scene-heading" style="text-align:center;">Where it&rsquo;s funded, where it&rsquo;ll go.</h2>
+        <h2 class="scene-heading" style="text-align:center;">The journey of the film.</h2>
         <div class="story-panel">
             <div class="highlight-line" style="color:var(--blue);">Target funding sources</div>
             <div class="source-list">
@@ -1200,7 +1236,7 @@ body {
 
 <!-- SLIDE 15 : INTENDED IMPACT -->
 <section class="scene" id="scene-impact">
-    <div class="scatter-dog anim-wobble" style="bottom:5%;left:2%;width:112px;"><img src="assets/dogs/dog-03-sad.png"></div>
+    <div class="scatter-dog anim-wobble" style="bottom:5%;left:2%;width:clamp(150px,20vw,260px);"><img src="assets/dogs/dog-03-sad.png"></div>
     <div class="hope-content">
         <span class="chapter-tag">SLIDE 16 &middot; INTENDED IMPACT</span>
         <p style="font-family:var(--font-marker);font-size:clamp(1.4rem,3.6vw,2.3rem);margin-top:18px;">Eliminate two diseases.</p>
@@ -1212,7 +1248,7 @@ body {
         <p>India needs to up its vaccination and sterilization drive. Once rabies is gone, the epidemic of fear will gradually ease.</p>
         <p class="handwritten-final" style="color:var(--red);">The fight can be won by a power Mr.B had.</p>
         <div class="love-box"><div class="love-box-title">The power of love.</div></div>
-        <p style="font-family:var(--font-comic);margin-top:14px;">Cinema cannot, alone, change a thing. It can start a discussion. That is the first step.</p>
+        <p style="font-family:var(--font-comic);margin-top:14px;">Cinema cannot cause change. But I believe cinema can initiate discussion. And that&rsquo;s the first step to change.</p>
     </div>
 </section>
 
@@ -1235,15 +1271,17 @@ body {
 
 <!-- SLIDE 16 : CLOSE / CONTACT -->
 <section class="epilogue-section" id="scene-close">
-    <div class="epilogue-box">
-        <span class="chapter-tag">SLIDE 16 &middot; CONTACT</span>
-        <div class="contact-photo" style="margin:0 auto 22px;max-width:360px;width:100%;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transform:rotate(-1.2deg);">
+    <div class="scatter-dog anim-wobble" style="top:50%;left:3%;width:clamp(96px,13vw,180px);"><img src="assets/dogs/dog-21-bearded.png"></div>
+    <div class="scatter-dog anim-float" style="top:50%;right:3%;width:clamp(96px,13vw,180px);"><img src="assets/dogs/dog-25-bearded2.png"></div>
+    <div class="epilogue-box" style="position:relative;background:var(--cream);color:var(--ink);border:4px solid var(--ink);box-shadow:9px 9px 0 var(--blue);">
+        <span class="chapter-tag" style="background:var(--red);color:var(--cream);border-color:var(--ink);box-shadow:3px 3px 0 var(--blue);">SLIDE 16 &middot; CONTACT</span>
+        <div class="contact-photo" style="margin:0 auto 24px;max-width:340px;width:100%;border:5px solid var(--red);box-shadow:7px 7px 0 var(--blue);transform:rotate(-1.2deg);background:var(--cream);">
             <img src="assets/stills/akash-brando-selfie.jpg" alt="Akash Girish with his pug Brando" style="display:block;width:100%;height:auto;border:3px solid var(--ink);">
         </div>
-        <div class="contact-subbox" style="max-width:520px;margin:0 auto;">
-            <div class="contact-name">AKASH GIRISH</div>
+        <div class="contact-subbox" style="max-width:500px;margin:0 auto;background:var(--cream);border:4px solid var(--ink);box-shadow:7px 7px 0 var(--blue);">
+            <div class="contact-name" style="color:var(--red);font-size:clamp(1.2rem,2.8vw,1.8rem);">AKASH GIRISH</div>
             <p style="font-family:var(--font-comic);font-size:clamp(0.9rem,2.2vw,1.2rem);letter-spacing:0.08em;opacity:1;color:var(--ink);">Director &middot; Cinematographer &middot; Producer &middot; Mr.B Films</p>
-            <p style="font-family:var(--font-hand);font-size:clamp(0.85rem,1.9vw,1rem);margin-top:8px;opacity:.85;">akashgirish08@gmail.com &middot; +91 73959 43014 &middot; Chennai, India</p>
+            <p style="font-family:var(--font-hand);font-size:clamp(0.85rem,1.9vw,1rem);margin-top:8px;opacity:1;color:var(--ink);">akashgirish08@gmail.com &middot; +91 73959 43014 &middot; Chennai, India</p>
         </div>
     </div>
 </section>
@@ -1603,7 +1641,7 @@ const tints = {
     'scene-logon':'rgba(247,241,227,0)',
     'scene-why':'rgba(222,203,172,0.62)',
     'scene-numbers':'rgba(222,203,172,0.5)',
-    'scene-origin':'rgba(247,241,227,0)',
+    'scene-origin':'rgba(45,107,79,0.5)',
     'scene-cynthia':'rgba(42,95,143,0.75)',
     'scene-opposetruth':'rgba(222,203,172,0.45)',
     'scene-crisis':'rgba(200,57,46,0.78)',
@@ -1611,14 +1649,14 @@ const tints = {
     'scene-voices':'rgba(45,107,79,0.5)',
     'scene-vision':'rgba(247,241,227,0)',
     'scene-filmmaker':'rgba(222,203,172,0.3)',
-    'scene-team':'rgba(42,95,143,0.2)',
+    'scene-team':'rgba(247,241,227,0.5)',
     'scene-timeline':'rgba(247,241,227,0)',
-    'scene-budget':'rgba(26,26,26,0.82)',
+    'scene-budget':'rgba(200,57,46,0.5)',
     'scene-fiance':'rgba(222,203,172,0.4)',
     'scene-impact':'rgba(247,241,227,0)',
     'scene-world':'rgba(42,95,143,0.12)',
     'scene-sample':'rgba(42,95,143,0.78)',
-    'scene-close':'rgba(42,95,143,0.78)'
+    'scene-close':'rgba(235,224,206,0.9)'
 };
 Object.entries(tints).forEach(([id,color])=>{
     const el = document.getElementById(id); if(!el) return;
