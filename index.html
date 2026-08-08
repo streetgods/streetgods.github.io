@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>STREET GODS ,  The Pitch Deck</title>
+<meta name="description" content="A 70-minute cinema verite documentary about India's street dog crisis. Directed by Akash Girish. Mr.B Films.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Luckiest+Guy&family=Gloria+Hallelujah&family=Inter:wght@400;700;900&family=Shadows+Into+Light:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+
+:root {
+    --ink: #1A1A1A;
+    --paper: #EDE4D3;
+    --paper-warm: #E8DBC5;
+    --paper-dark: #DDD0BA;
+    --red: #C8392E;
+    --red-dark: #9E2B22;
+    --cream: #F7F1E3;
+    --blue: #2A5F8F;
+    --blue-dark: #1A3D5C;
+    --green: #2D6B4F;
+    --green-dark: #1A4A33;
+    --panel-border: 4px solid var(--ink);
+
+    --font-marker: 'Bungee', cursive;
+    --font-comic: 'Luckiest Guy', cursive;
+    --font-hand: 'Gloria Hallelujah', cursive;
+    --font-caveat: 'Shadows Into Light', cursive;
+    --font-patrick: 'Indie Flower', cursive;
+
+    --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* ============ OLD SCROLL TEXTURE (canvas-generated, continuous) ============ */
+#scrollTexture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+}
+
+#grainCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+}
+
+.paper-tint {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: background 0.8s ease;
+}
+
+/* ============ SCROLL DRIP ============ */
+.scroll-drip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 5px;
+    background: var(--red);
+    z-index: 9999;
+    width: 0%;
+    box-shadow: 0 0 8px var(--red);
+    transition: width 0.05s linear;
+}
+
+/* ============ COMIC PANEL ============ */
+.panel {
+    border: var(--panel-border);
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: box-shadow 0.3s ease;
+}
+.panel:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--ink);
+}
+.panel-red { background: var(--red); color: var(--cream); }
+.panel-dark { background: var(--ink); color: var(--cream); }
+.panel-blue { background: var(--blue); color: var(--cream); }
+.panel-green { background: var(--green); color: var(--cream); }
+.panel-paper { background: var(--cream); }
+
+/* ============ LOADER ============ */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease;
+}
+#loader.hidden { opacity: 0; pointer-events: none; }
+.loader-title {
+    font-family: var(--font-marker);
+    font-size: clamp(1.8rem, 7vw, 4.5rem);
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    animation: loaderPulse 1.2s ease-in-out infinite;
+}
+.loader-sub {
+    font-family: var(--font-comic);
+    font-size: clamp(0.7rem, 1.8vw, 1.1rem);
+    color: var(--red);
+    letter-spacing: 0.3em;
+    margin-top: 7px;
+}
+@keyframes loaderPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+}
+
+/* ============ COVER ============ */
+#cover {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 54px 5vw 90px;
+    z-index: 1;
+}
+
+.cover-dogs {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 810px;
+    margin-bottom: 27px;
+    position: relative;
+    min-height: clamp(162px, 27vw, 270px);
+}
+.cover-dog { flex-shrink: 0; }
+.cover-dog:nth-child(1) { width: 18%; }
+.cover-dog:nth-child(2) { width: 20%; }
+.cover-dog:nth-child(3) { width: 24%; }
+.cover-dog:nth-child(4) { width: 20%; }
+.cover-dog:nth-child(5) { width: 18%; }
+.cover-dog img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(3px 4px 5px rgba(0,0,0,0.12));
+}
+
+.cover-title-block {
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+.cover-title {
+    font-family: var(--font-marker);
+    font-size: clamp(3.2rem, 16vw, 9.9rem);
+    line-height: 0.82;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    text-shadow: 4px 4px 0 var(--red), 0 1px 0 rgba(0,0,0,0.4);
+}
+.cover-title .word2 {
+    display: block;
+    color: var(--red);
+    text-shadow: 4px 4px 0 var(--ink);
+}
+.cover-title .word2 .lt { color: var(--cream); font-weight:900; }
+.cover-title-block { z-index:6; }
+.cover-inset-dogs { position:absolute; left:0; right:0; bottom:0; z-index:2; display:flex; justify-content:space-between; align-items:flex-end; gap:1vw; pointer-events:none; }
+.inset-dog { flex-shrink:0; opacity:.92; }
+.inset-dog img { width:100%; height:auto; filter:drop-shadow(3px 4px 5px rgba(0,0,0,.18)); }
+.d1{ width:clamp(48px,8vw,96px); }
+.d2{ width:clamp(44px,7vw,82px); }
+.d3{ width:clamp(50px,8.5vw,100px); }
+.d4{ width:clamp(46px,7.5vw,88px); }
+.d5{ width:clamp(44px,7vw,82px); }
+.cover-subtitle {
+    font-family: var(--font-comic);
+    font-size: clamp(1rem, 3.2vw, 2rem);
+    letter-spacing: 0.2em;
+    margin-top: 18px;
+    color: var(--cream);
+    text-shadow: 1px 2px 0 rgba(0,0,0,0.7);
+}
+.cover-credits {
+    font-family: var(--font-patrick);
+    font-size: clamp(0.72rem, 1.8vw, 1rem);
+    letter-spacing: 0.1em;
+    margin-top: 14px;
+    color: var(--cream);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+.scroll-cue {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    animation: bobUp 2s ease-in-out infinite;
+}
+.scroll-cue span {
+    font-family: var(--font-comic);
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    opacity: 0.5;
+}
+.scroll-cue-arrow {
+    width: 20px; height: 20px;
+    border-right: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    transform: rotate(45deg);
+    opacity: 0.4;
+}
+@keyframes bobUp {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-9px); }
+}
+
+/* ============ DOG ANIMATIONS ============ */
+.anim-wag { animation: animWag 1.2s ease-in-out infinite; transform-origin: 50% 90%; }
+.anim-tilt { animation: animTilt 2s ease-in-out infinite; transform-origin: 50% 80%; }
+.anim-bounce { animation: animBounce 0.7s ease-in-out infinite; transform-origin: 50% 100%; }
+.anim-float { animation: animFloat 3s ease-in-out infinite; transform-origin: center; }
+.anim-sway { animation: animSway 2.5s ease-in-out infinite; transform-origin: 50% 100%; }
+.anim-breathe { animation: animBreathe 2.8s ease-in-out infinite; transform-origin: center; }
+.anim-wobble { animation: animWobble 1.5s ease-in-out infinite; transform-origin: 50% 90%; }
+.anim-jump { animation: animJump 1.8s ease-in-out infinite; transform-origin: center; }
+.anim-tail { animation: animTail 0.8s ease-in-out infinite; transform-origin: 80% 90%; }
+
+@keyframes animWag { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
+@keyframes animTilt { 0%,100%{transform:rotate(-4deg) translateY(0)} 50%{transform:rotate(4deg) translateY(-4px)} }
+@keyframes animBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-13px)} }
+@keyframes animFloat { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-7px) rotate(1deg)} }
+@keyframes animSway { 0%,100%{transform:translateX(0) rotate(0)} 33%{transform:translateX(5px) rotate(1deg)} 66%{transform:translateX(-5px) rotate(-1deg)} }
+@keyframes animBreathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+@keyframes animWobble { 0%,100%{transform:rotate(-3deg) scale(1)} 50%{transform:rotate(3deg) scale(1.02)} }
+@keyframes animJump { 0%,100%{transform:translateY(0) scaleY(1)} 30%{transform:translateY(-18px) scaleY(1.05)} 50%{transform:translateY(-18px) scaleY(1.05)} 70%{transform:translateY(0) scaleY(0.98)} }
+@keyframes animTail { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(8deg)} }
+
+.dog-char:hover .anim-wag, .dog-char:hover .anim-tilt, .dog-char:hover .anim-sway, .dog-char:hover .anim-wobble { animation-duration: 0.4s; }
+.dog-char:hover .anim-bounce { animation-duration: 0.3s; }
+.dog-char.petted img { animation: petPop 0.5s ease; }
+@keyframes petPop { 0%{transform:scale(1)} 40%{transform:scale(1.15) rotate(-3deg)} 70%{transform:scale(0.95) rotate(2deg)} 100%{transform:scale(1)} }
+
+.dog-char { cursor: pointer; display: inline-block; transition: filter 0.2s ease; }
+.dog-char img { width: 100%; max-width: 100%; height: auto; display: block; filter: drop-shadow(2px 3px 5px rgba(0,0,0,0.1)); user-select: none; -webkit-user-drag: none; }
+.dog-char:hover { filter: brightness(1.05); }
+.dog-sm { width: clamp(90px, 16vw, 144px); }
+.dog-md { width: clamp(140px, 26vw, 216px); }
+.dog-lg { width: clamp(190px, 34vw, 315px); }
+.dog-xl { width: clamp(240px, 44vw, 415px); }
+
+/* ============ SCENE BASE ============ */
+.scene {
+    min-height: 100vh;
+    min-height: 100svh;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: 54px 5vw;
+    overflow: hidden;
+}
+.chapter-tag {
+    font-family: var(--font-comic);
+    font-size: clamp(0.9rem, 2.3vw, 1.4rem);
+    letter-spacing: 0.15em;
+    margin-bottom: 22px;
+    display: inline-block;
+    padding: 4px 14px;
+    border: 3px solid var(--ink);
+    background: var(--cream);
+    box-shadow: 3px 3px 0 var(--ink);
+}
+.scene-heading {
+    font-family: var(--font-marker);
+    font-size: clamp(2rem, 7vw, 5rem);
+    line-height: 0.92;
+    margin-bottom: 18px;
+}
+
+/* ============ NUMBERS SCENE ============ */
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 27px;
+    max-width: 1080px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+}
+@media (max-width: 768px) { .numbers-grid { grid-template-columns: 1fr; gap: 18px; } }
+
+#scene-numbers { flex-direction: column; justify-content: center; align-items: stretch; }
+#scene-numbers .marquee { margin-top: 34px; flex-shrink: 0; }
+
+.numbers-right { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.numbers-dog { display: flex; justify-content: flex-start; padding-left: 6px; }
+.numbers-dog .dog-char { width: clamp(200px, 40vw, 360px); }
+
+.stat-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+.stat-panel { padding: 22px 18px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.stat-num { font-family: var(--font-comic); font-size: clamp(2rem, 5.5vw, 4.2rem); line-height: 1; letter-spacing: 0.02em; }
+.stat-label { font-family: var(--font-hand); font-size: clamp(0.77rem, 1.8vw, 1.1rem); margin-top: 7px; }
+
+/* ============ MR.B SCENE ============ */
+.mrb-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px;
+    max-width: 1080px;
+    margin: 0 auto;
+    align-items: center;
+    width: 100%;
+}
+@media (max-width: 768px) { .mrb-grid { grid-template-columns: 1fr; } }
+
+.mrb-panel {
+    background: var(--cream);
+    border: var(--panel-border);
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 32px 29px;
+}
+.mrb-panel p {
+    font-family: var(--font-caveat);
+    font-size: clamp(1.3rem, 3.2vw, 2rem);
+    line-height: 1.4;
+    margin-bottom: 13px;
+}
+.mrb-panel p.highlight {
+    font-family: var(--font-marker);
+    font-size: clamp(1.4rem, 3.6vw, 2.5rem);
+    color: var(--red);
+}
+.dog-zone { display: flex; align-items: center; justify-content: center; position: relative; z-index: 5; }
+
+/* ============ CYNTHIA SCENE ============ */
+.cynthia-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px;
+    max-width: 1080px;
+    margin: 0 auto;
+    align-items: center;
+    width: 100%;
+}
+@media (max-width: 768px) { .cynthia-grid { grid-template-columns: 1fr; } }
+.cynthia-panel { max-width: 540px; }
+.cynthia-panel .big-num { font-family: var(--font-marker); font-size: clamp(2.7rem, 11vw, 6.3rem); line-height: 1; }
+.cynthia-panel p { font-family: var(--font-comic); font-size: clamp(1.2rem, 2.7vw, 1.8rem); margin-top: 14px; line-height: 1.35; }
+.cynthia-panel .handwritten { font-family: var(--font-caveat); font-size: clamp(1.4rem, 3.6vw, 2.3rem); margin-top: 22px; opacity: 0.9; }
+
+/* ============ CRISIS SCENE ============ */
+.crisis-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 36px;
+    max-width: 1080px;
+    margin: 0 auto;
+    align-items: center;
+    width: 100%;
+}
+@media (max-width: 768px) { .crisis-grid { grid-template-columns: 1fr; } }
+.crisis-panel { max-width: 540px; }
+.crisis-panel .big-num { font-family: var(--font-comic); font-size: clamp(3.6rem, 14vw, 8.1rem); line-height: 0.85; }
+.crisis-panel p { font-size: clamp(0.9rem, 2vw, 1.2rem); margin-top: 14px; }
+.crisis-panel p.impact { font-family: var(--font-marker); font-size: clamp(1.2rem, 3.2vw, 2rem); margin-top: 18px; }
+
+/* 2,800 box ,  separates the headline from the body text */
+.poison-box {
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 20px 24px 18px;
+    margin-top: 8px;
+    display: inline-block;
+    transform: rotate(-0.75deg);
+}
+.poison-box .big-num {
+    font-family: var(--font-comic);
+    font-size: clamp(3rem, 12vw, 7rem);
+    line-height: 0.85;
+    color: var(--red);
+    text-shadow: 4px 4px 0 var(--ink);
+}
+.poison-box .poison-sub {
+    font-family: var(--font-comic);
+    font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+    letter-spacing: 0.05em;
+    color: var(--red-dark);
+    margin-top: 4px;
+}
+
+/* Telangana callout box ,  stands out */
+.telangana-callout {
+    background: var(--red);
+    color: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 18px 22px;
+    margin-top: 20px;
+    font-family: var(--font-marker);
+    font-size: clamp(1.1rem, 2.8vw, 1.7rem);
+    line-height: 1.3;
+    transform: rotate(-1deg);
+}
+
+/* ============ FILM SCENE ============ */
+.film-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(26px, 4vw, 60px);
+    max-width: 1160px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+}
+.film-copy { text-align: left; }
+.film-copy .chapter-tag { margin-bottom: 16px; }
+.film-heading {
+    font-family: var(--font-marker);
+    font-size: clamp(2.3rem, 7vw, 5.4rem);
+    line-height: 0.9;
+    color: var(--red);
+    text-shadow: 3px 3px 0 var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+}
+.film-panel {
+    background: var(--cream);
+    border: var(--panel-border);
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 20px 24px;
+    transform: rotate(-0.6deg);
+    max-width: 560px;
+}
+.film-panel p {
+    font-family: var(--font-comic);
+    font-size: clamp(1rem, 2.3vw, 1.45rem);
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+.film-panel p:last-child { margin-bottom: 0; }
+.film-panel p.accent { color: var(--red); }
+.film-notes {
+    font-family: var(--font-caveat);
+    font-size: clamp(1.05rem, 2.4vw, 1.5rem);
+    line-height: 1.5;
+    opacity: 0.75;
+    margin-top: 20px;
+    max-width: 540px;
+}
+.film-art { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.film-art .cameraman {
+    width: clamp(220px, 36vw, 390px);
+    height: auto;
+    filter: drop-shadow(4px 6px 6px rgba(0,0,0,0.16));
+}
+.film-dogs { display: flex; align-items: flex-end; justify-content: center; gap: 16px; }
+.film-dogs img { width: clamp(84px, 13vw, 148px); height: auto; }
+@media (max-width: 900px) {
+    .film-grid { grid-template-columns: 1fr; gap: 24px; text-align: center; }
+    .film-copy { text-align: center; }
+    .film-panel, .film-notes { margin-left: auto; margin-right: auto; }
+    .film-art { gap: 6px; }
+    .film-art .cameraman { width: clamp(200px, 48vw, 320px); }
+    .film-dogs img { width: clamp(120px, 36vw, 180px); }
+    #scene-film { padding-bottom: 72px; }
+}
+
+.voice-panels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+    margin-bottom: 8px;
+    max-width: 810px;
+}
+@media (max-width: 768px) { .voice-panels { grid-template-columns: 1fr; } }
+.voice-panel {
+    padding: 30px 18px;
+    text-align: center;
+    border: var(--panel-border);
+    box-shadow: 4px 4px 0 var(--ink);
+}
+.voice-panel h3 { font-family: var(--font-comic); font-size: clamp(1.25rem, 3.1vw, 1.9rem); letter-spacing: 0.08em; margin-bottom: 7px; }
+.voice-panel p { font-family: var(--font-hand); font-size: 0.85rem; opacity: 0.8; margin: 0; }
+
+/* ============ VOICES SCENE (5B) ============ */
+.voices-wrap { max-width: 810px; margin: 0 auto; text-align: center; width: 100%; }
+.voices-wrap .voice-panels { margin-top: 0; }
+
+/* ============ HOPE SCENE ============ */
+.hope-content { max-width: 720px; margin: 0 auto; text-align: center; }
+.hope-words { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+.hope-word { font-family: var(--font-comic); font-size: clamp(2.2rem, 8.5vw, 4.6rem); line-height: 1; letter-spacing: 0.03em; }
+.hope-word.red { color: var(--red); text-shadow: 3px 3px 0 var(--ink); }
+.hope-word.blue { color: var(--blue); text-shadow: 3px 3px 0 var(--ink); }
+.hope-word.amp { font-size: clamp(1.7rem, 6vw, 3.4rem); line-height: 0.8; transform: rotate(-5deg); }
+.hope-content p { font-size: clamp(0.88rem, 1.9vw, 1.2rem); margin-top: 9px; line-height: 1.45; }
+.hope-content .handwritten-final { font-family: var(--font-caveat); font-size: clamp(1.4rem, 3.4vw, 2.2rem); margin-top: 14px; line-height: 1.25; }
+
+/* ============ EPILOGUE (origin-style box, blue) ============ */
+.epilogue-section {
+    min-height: auto;
+    padding: 90px 5vw;
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.epilogue-box {
+    background: var(--cream);
+    border: var(--panel-border);
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 32px 29px;
+    max-width: 720px;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+.epilogue-box .chapter-tag { margin-bottom: 18px; }
+.epilogue-box p {
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
+    line-height: 1.6;
+    margin-top: 10px;
+}
+/* Reserved space for the closing text Akash is adding */
+.epilogue-text-slot { min-height: 150px; margin-top: 26px; }
+
+/* ============ POWER OF LOVE BOX (HOPE SCENE) ============ */
+.love-box {
+    background: var(--red);
+    color: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 16px 20px;
+    margin: 22px auto 0;
+    max-width: 480px;
+    transform: rotate(-1deg);
+    text-align: center;
+}
+.love-box .love-box-title {
+    font-family: var(--font-caveat);
+    font-size: clamp(1.5rem, 3.6vw, 2.3rem);
+    color: var(--cream);
+    line-height: 1.2;
+}
+
+/* ============ CONTACT ============ */
+.contact-subbox {
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    background: var(--paper);
+    padding: 18px 20px 14px;
+    max-width: 560px;
+    width: 100%;
+    margin: 48px auto 0;
+    text-align: center;
+}
+.contact-subbox .contact-name { font-family: var(--font-marker); font-size: clamp(1.3rem, 3.4vw, 2.1rem); color: var(--red); }
+.contact-subbox p { font-size: 0.77rem; margin: 4px 0; opacity: 0.75; }
+
+/* ============ MARQUEE ============ */
+.marquee { overflow: hidden; white-space: nowrap; padding: 14px 0; background: var(--ink); color: var(--red); width: 100vw; margin-left: calc(-5vw); position: relative; z-index: 1; }
+.marquee-track { display: inline-block; animation: marqueeScroll var(--marquee-dur, 25s) linear infinite; will-change: transform; transform: translateZ(0); }
+.marquee-track span { font-family: var(--font-comic); font-size: clamp(1.1rem, 2.7vw, 2rem); letter-spacing: 0.1em; padding: 0 18px; }
+.marquee-track .dot { color: var(--cream); opacity: 0.3; }
+@keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============ SCATTERED DOGS ============ */
+.scatter-dog {
+    position: absolute;
+    z-index: 1;
+    opacity: 0.85;
+    pointer-events: none;
+}
+.scatter-dog img { width: 100%; height: auto; filter: drop-shadow(2px 3px 5px rgba(0,0,0,0.08)); }
+
+/* ============ MOBILE ============ */
+@media (max-width: 768px) {
+    .scene { padding: 45px 5vw; }
+    .mrb-panel { padding: 22px 18px; }
+    .cover-dog:nth-child(1), .cover-dog:nth-child(5) { width: 20%; }
+    .cover-dog:nth-child(2), .cover-dog:nth-child(4) { width: 22%; }
+    .cover-dog:nth-child(3) { width: 26%; }
+    /* crisis dogs: keep clear of stacked text on phones */
+    .crisis-dog-top { display: none; }
+    .crisis-dog-bottom { bottom: 2% !important; left: 2% !important; width: 92px !important; }
+}
+
+/* ===== STREET GODS PITCH DECK : deck-specific ===== */
+.deck-center { text-align: center; }
+.deck-kicker { font-family: var(--font-comic); letter-spacing: 0.14em; font-size: clamp(0.9rem,2.2vw,1.3rem); color: var(--red); }
+.deck-sub { font-family: var(--font-hand); font-size: clamp(1rem,2.4vw,1.5rem); opacity: 0.72; margin-top: 10px; }
+.logon-hold { max-width: 1000px; margin: 0 auto; text-align: center; }
+.logon-hold .scene-heading { margin-bottom: 26px; }
+.logon-text { font-family: var(--font-marker); font-size: clamp(1.6rem,5vw,3.6rem); line-height: 1.12; }
+.logon-tail { font-family: var(--font-caveat); font-size: clamp(1.3rem,3.4vw,2.2rem); margin-top: 20px; color: var(--red); }
+
+.why-col { display: flex; flex-direction: column; gap: 18px; max-width: 940px; margin: 0 auto; width: 100%; }
+.why-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+@media (max-width: 720px){ .why-row{ grid-template-columns: 1fr; } }
+.why-card { background: var(--cream); border: var(--panel-border); box-shadow: 5px 5px 0 var(--ink); padding: 22px 22px; }
+.why-card h4 { font-family: var(--font-comic); font-size: clamp(1.05rem,2.6vw,1.6rem); letter-spacing: 0.06em; color: var(--red); margin-bottom: 7px; }
+.why-card p { font-size: clamp(0.86rem,1.9vw,1.15rem); line-height: 1.5; }
+.why-card.blue h4 { color: var(--blue); }
+.why-card.dark h4 { color: var(--ink); }
+
+.story-flex { display: flex; flex-direction: column; gap: 22px; max-width: 900px; margin: 0 auto; width: 100%; }
+.story-panel { background: var(--cream); border: var(--panel-border); box-shadow: 5px 5px 0 var(--ink); padding: 28px 30px; }
+.story-panel .big-line { font-family: var(--font-caveat); font-size: clamp(1.35rem,3.3vw,2.1rem); line-height: 1.4; }
+.story-panel .highlight-line { font-family: var(--font-marker); font-size: clamp(1.3rem,3.4vw,2.3rem); color: var(--red); margin-top: 10px; }
+.story-panel p { margin-top: 10px; font-size: clamp(0.9rem,2vw,1.2rem); line-height: 1.55; }
+
+.team-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; max-width: 1080px; margin: 0 auto; width: 100%; }
+@media (max-width: 860px){ .team-grid{ grid-template-columns: 1fr; } }
+.team-card { padding: 26px 20px; text-align: center; }
+.team-card .team-name { font-family: var(--font-marker); font-size: clamp(1.15rem,2.8vw,1.8rem); letter-spacing: 0.02em; }
+.team-card .team-role { font-family: var(--font-comic); font-size: clamp(0.85rem,2vw,1.15rem); color: var(--red); margin: 7px 0 10px; letter-spacing: 0.08em; }
+.team-card p { font-family: var(--font-hand); font-size: 0.9rem; line-height: 1.5; opacity: 0.85; }
+
+.tl-wrap { display: flex; flex-direction: column; gap: 20px; max-width: 960px; margin: 0 auto; width: 100%; }
+.tl-col { border: var(--panel-border); background: var(--cream); box-shadow: 5px 5px 0 var(--ink); padding: 24px 26px; }
+.tl-col h3 { font-family: var(--font-marker); font-size: clamp(1.2rem,3vw,2rem); letter-spacing: 0.03em; }
+.tl-col ul { list-style: none; margin-top: 12px; }
+.tl-col li { position: relative; padding: 7px 0 7px 26px; font-size: clamp(0.9rem,1.9vw,1.15rem); line-height: 1.45; }
+.tl-col li::before { content: ''; position: absolute; left: 4px; top: 15px; width: 10px; height: 10px; background: var(--red); transform: rotate(45deg); }
+.tl-col.done h3 { color: var(--green); }
+.tl-col.now h3 { color: var(--blue); }
+.tl-col.next h3 { color: var(--red); }
+.tl-col .tl-flag { font-family: var(--font-comic); font-size: 0.78rem; letter-spacing: 0.12em; opacity: 0.65; display: block; margin-bottom: 2px; }
+
+.budget-rows { display: flex; flex-direction: column; gap: 14px; max-width: 820px; margin: 0 auto; width: 100%; }
+.budget-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); background: var(--cream); padding: 14px 20px; }
+.budget-row .b-label { font-family: var(--font-comic); font-size: clamp(0.95rem,2.3vw,1.4rem); }
+.budget-row .b-val { font-family: var(--font-marker); font-size: clamp(1.3rem,3.4vw,2.2rem); color: var(--red); text-align: right; }
+.budget-row.total { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.budget-row.total .b-label { color: var(--cream); }
+.budget-row.total .b-val { color: var(--red); }
+.budget-row.funded .b-val { color: var(--green); }
+.story-band { max-width: 920px; margin: 0 auto; width: 100%; }
+.budget-sub { font-family: var(--font-caveat); font-size: clamp(1rem,2.4vw,1.5rem); opacity: 0.8; max-width: 820px; margin: 16px auto 0; text-align: center; line-height: 1.5; }
+
+.ask-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; max-width: 820px; margin: 18px auto 0; width: 100%; }
+@media (max-width: 720px){ .ask-grid{ grid-template-columns: 1fr; } }
+.ask-item { background: var(--paper); border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); padding: 10px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.ask-item .a-label { font-family: var(--font-comic); font-size: clamp(0.8rem,1.9vw,1.05rem); }
+.ask-item .a-val { font-family: var(--font-marker); font-size: clamp(1rem,2.4vw,1.4rem); color: var(--red); white-space: nowrap; }
+.source-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; max-width: 820px; margin: 20px auto 0; width: 100%; }
+@media (max-width: 720px){ .source-list{ grid-template-columns: 1fr; } }
+.source-list div { font-family: var(--font-hand); font-size: clamp(0.82rem,1.9vw,1.05rem); border: 2px solid var(--ink); background: var(--cream); box-shadow: 3px 3px 0 var(--ink); padding: 8px 12px; }
+
+.impact-words { display: flex; flex-direction: column; gap: 2px; margin: 10px 0; }
+.impact-word { font-family: var(--font-comic); font-size: clamp(2.4rem,9vw,5rem); line-height: 1; }
+.impact-word.red { color: var(--red); text-shadow: 3px 3px 0 var(--ink); }
+.impact-word.blue { color: var(--blue); text-shadow: 3px 3px 0 var(--ink); }
+.impact-word.amp { font-size: clamp(1.8rem,6vw,3.4rem); line-height: 0.8; transform: rotate(-5deg); }
+
+.portrait-head { font-family: var(--font-marker); font-size: clamp(2rem,7vw,4.6rem); line-height: 0.95; }
+
+/* ===== STREET GODS v17 : real-film photographic panels + colour flourish ===== */
+.photo-panel {
+    position: relative;
+    background: var(--cream);
+    border: 4px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--ink);
+    padding: 10px;
+    transform: rotate(-1.2deg);
+    max-width: 560px; width: 100%;
+}
+.photo-panel img { display:block; width:100%; height:auto; border:3px solid var(--ink); object-fit:cover; }
+.photo-panel.rotate-right { transform: rotate(1.4deg); }
+.photo-panel.rotate-none { transform: none; }
+.photo-cap {
+  font-family: var(--font-hand);
+  font-size: clamp(0.85rem,2vw,1.15rem);
+  text-align:center;
+  padding:10px 6px 4px;
+  opacity:0.85;
+  line-height:1.35;
+}
+.photo-cap b { font-family: var(--font-marker); color:var(--red); }
+
+/* Hero photo on cover */
+.cover-image-wrap {
+  position:absolute; inset:0; z-index:0; overflow:hidden;
+}
+.cover-image-wrap img {
+  width:100%; height:100%; object-fit:cover;
+  filter: saturate(0.82) contrast(1.04) sepia(0.14) brightness(0.92);
+  transform: scale(1.03);
+}
+.cover-image-wrap::after {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(120% 90% at 50% 20%, rgba(28,25,20,0.15) 0%, rgba(20,16,10,0.55) 62%, rgba(12,10,6,0.72) 100%);
+}
+#cover { background:#14110c; }
+#cover .cover-title-block { z-index: 6; }
+
+/* World montage slide */
+.world-montage { max-width:1180px; margin:0 auto; width:100%; }
+.world-strip {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:28px;
+}
+@media (max-width:820px){ .world-strip{ grid-template-columns:repeat(2,1fr); } }
+.world-tile { position:relative; overflow:hidden; border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink); background:var(--cream); border-radius:4px; }
+.world-tile img { display:block; width:100%; height:200px; object-fit:cover; transition: transform .5s ease; }
+@media (max-width:820px){ .world-tile img{ height:150px; } }
+.world-tile:hover img { transform:scale(1.06); }
+.world-tile .tile-cap {
+  position:absolute; left:0; right:0; bottom:0;
+  background:linear-gradient(to top, rgba(16,13,8,0.85), transparent);
+  color:var(--cream); font-family:var(--font-caveat);
+  font-size:clamp(0.8rem,1.8vw,1.05rem); padding:26px 10px 7px; line-height:1.2;
+}
+
+/* Sample / reel CTA */
+.sample-cta { max-width:720px; margin:0 auto; width:100%; text-align:center; }
+.sample-box {
+  background:var(--ink); color:var(--cream); border:4px solid var(--red);
+  box-shadow:6px 6px 0 var(--red); padding:26px 28px;
+}
+.sample-box h3 { font-family:var(--font-marker); font-size:clamp(1.3rem,4vw,2.2rem); color:var(--red); }
+.sample-box p { font-family:var(--font-hand); font-size:clamp(.95rem,2.2vw,1.3rem); margin:12px 0 4px; }
+.sample-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+.btn-ink {
+  font-family:var(--font-comic); letter-spacing:.06em;
+  background:var(--cream); color:var(--ink); border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink); padding:12px 20px; text-decoration:none;
+  display:inline-block; cursor:pointer; transition:transform .12s, box-shadow .12s;
+  font-size:clamp(.9rem,2.2vw,1.15rem);
+}
+.btn-ink:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+.btn-red { background:var(--red); color:var(--cream); border-color:var(--red); box-shadow:4px 4px 0 var(--ink); }
+.btn-red:hover { background:var(--red-dark); }
+
+/* voice avatar chips */
+.voice-chip { display:flex; align-items:center; gap:12px; text-align:left; }
+.voice-chip img { width:84px; height:84px; object-fit:cover; border:3px solid var(--ink); box-shadow:3px 3px 0 var(--ink); border-radius:50%; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<!-- SCROLL TEXTURE CANVAS -->
+<canvas id="scrollTexture"></canvas>
+<canvas id="grainCanvas"></canvas>
+<div class="paper-tint" id="paperTint"></div>
+
+<!-- SCROLL DRIP -->
+<div class="scroll-drip" id="scrollDrip"></div>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-title">STREET GODS</div>
+    <div class="loader-sub">THE PITCH DECK</div>
+</div>
+
+<!-- ============ COVER ============ -->
+
+<!-- ============ COVER ============ -->
+<section id="cover" class="scene" style="min-height:100svh;background:#14110c;">
+    <div class="cover-image-wrap">
+        <img src="assets/stills/opt/cover-mrblack.jpg" alt="Mr. Black, a street dog, at night">
+    </div>
+    <div class="cover-title-block">
+        <h1 class="cover-title">STREET<span class="word2"><span class="lt">G</span>O<span class="lt">D</span>S</span></h1>
+        <p class="cover-subtitle">THE PITCH DECK</p>
+        <p class="cover-credits">A 70-minute cinema verite documentary &middot; Directed by Akash Girish &middot; Mr.B Films &middot; India &middot; 2028</p>
+    </div>
+    <div class="scroll-cue">
+        <span>PITCH</span>
+        <div class="scroll-cue-arrow"></div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- DECK SCENE 1 : THE LOGLINE                                            -->
+<section class="scene" id="scene-logon">
+    <div class="scatter-dog anim-wag" style="bottom:4%;right:2%;width:118px;"><img src="assets/dogs/dog-01-chibi.png"></div>
+    <div class="logon-cover deck-center">
+        <span class="chapter-tag">SLIDE 01 &middot; THE LOGLINE</span>
+        <div class="love-box" style="max-width:760px;margin:0 auto;">
+            <div class="love-box-title">India&rsquo;s Supreme Court promised control.</div>
+            <div class="love-box-title">But what ensued was chaos.</div>
+            <p style="font-family:var(--font-hand);font-size:clamp(1rem,2.3vw,1.4rem);margin-top:16px;color:var(--cream);opacity:.96;">Driven by the fear of rabies, dogs' killings have spiked nationwide in just eight months. Man&rsquo;s best friend is now the enemy number one.</p>
+            <div class="love-box-title" style="margin-top:20px;">A grieving filmmaker picks up his camera to investigate what&rsquo;s going wrong.</div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<!-- SLIDE 02 : WHY THIS FILM, WHY NOW -->
+<section class="scene" id="scene-why">
+    <div class="why-col">
+        <span class="chapter-tag">SLIDE 02 &middot; WHY THIS FILM, WHY NOW</span>
+        <h2 class="scene-heading">Why now.</h2>
+        <div class="why-row">
+            <div class="why-card">
+                <h4>THE LAW THAT MADE SENSE</h4>
+                <p>In 2023, the Indian government passed the Animal Birth Control Rules. Catch. Sterilize. Vaccinate. Return. At scale. Humane and scientifically sound. The onus fell on the overworked municipal bodies.</p>
+            </div>
+            <div class="why-card blue">
+                <h4>THE RULING THAT BACKFIRED</h4>
+                <p>After a 6-year-old girl in Delhi died of rabies in June 2025, the Supreme Court ruled on the &ldquo;street dog menace.&rdquo; It ordered stray dogs relocated into overcrowded municipal pounds.</p>
+            </div>
+            <div class="why-card dark">
+                <h4>POUNDS ARE BLOODBATHS</h4>
+                <p>Dogs are territorial. A hundred strangers, one cage. In eight months, dog killings spiked out of control nationwide.</p>
+            </div>
+            <div class="why-card">
+                <h4>MISINFORMATION BURNS</h4>
+                <p>Fear spread like wildfire. Mobilized by the housing. Families who fed the dogs for years suddenly found neighbours at the gate.</p>
+            </div>
+        </div>
+        <div class="telangana-callout" style="max-width:620px;margin:6px auto 0;text-align:center;">
+            IN TELANGANA ALONE, OVER 2,800 DOGS WERE ILLEGALLY POISONED AND DUMPED IN OPEN PITS.
+        </div>
+        <p class="deck-sub" style="text-align:center;">A collision between two legitimate truths. Nobody has figured out how to reconcile them.</p>
+    </div>
+</section>
+
+<!-- SLIDE 03 : THE SCALE -->
+<section class="scene" id="scene-numbers">
+    <div class="numbers-grid">
+        <div>
+            <span class="chapter-tag">SLIDE 03 &middot; THE SCALE</span>
+            <h2 class="scene-heading">The stakes aren&rsquo;t tiny.</h2>
+            <p style="font-family:var(--font-caveat);font-size:clamp(1.2rem,2.7vw,1.8rem);margin-top:11px;opacity:0.72;max-width:340px;">The official estimate is a work of fiction. But every number is staggering.</p>
+        </div>
+        <div class="numbers-right">
+            <div class="stat-panels">
+                <div class="panel panel-paper stat-panel"><div class="stat-num" data-target="62" data-suffix="M">0</div><div class="stat-label">Street dogs in India</div></div>
+                <div class="panel panel-red stat-panel"><div class="stat-num" data-target="3.72" data-suffix="M" data-decimal="2">0</div><div class="stat-label">Dog bite cases, 2024</div></div>
+                <div class="panel panel-dark stat-panel"><div class="stat-num" data-target="5700" data-suffix="">0</div><div class="stat-label">Estimated rabies deaths, 2024</div></div>
+                <div class="panel panel-paper stat-panel"><div class="stat-num" style="color:var(--red);" data-target="34" data-suffix="%">0</div><div class="stat-label">Vaccination coverage achieved</div></div>
+                <div class="panel panel-blue stat-panel" style="grid-column:span 2;"><div class="stat-num" data-target="8000" data-suffix="">0</div><div class="stat-label">Years of the Pariah</div></div>
+            </div>
+            <div style="display:flex;justify-content:center;align-items:flex-end;gap:16px;">
+                <div class="dog-char dog-lg anim-wag" data-scene="numbers"><img src="assets/dogs/dog-06-sniffing.png" alt="Sniffing dog"></div>
+            <div class="photo-panel rotate-right" style="max-width:340px;margin:0;">
+                <img src="assets/stills/opt/night-dogs-crossing.jpg" alt="Dogs crossing a road at night" style="height:170px;">
+                <div class="photo-cap" style="font-size:0.8rem;">They own the night</div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="marquee">
+        <div class="marquee-track">
+            <span>62 MILLION STREET DOGS</span><span class="dot">/</span>
+            <span>3.72 MILLION BITES</span><span class="dot">/</span>
+            <span>5,700 RABIES DEATHS</span><span class="dot">/</span>
+            <span>34% VACCINATED</span><span class="dot">/</span>
+            <span>36% OF GLOBAL RABIES DEATHS</span><span class="dot">/</span>
+            <span>8,000 YEARS</span><span class="dot">/</span>
+            <span>62 MILLION STREET DOGS</span><span class="dot">/</span>
+            <span>3.72 MILLION BITES</span><span class="dot">/</span>
+            <span>5,700 RABIES DEATHS</span><span class="dot">/</span>
+            <span>34% VACCINATED</span><span class="dot">/</span>
+            <span>36% OF GLOBAL RABIES DEATHS</span><span class="dot">/</span>
+            <span>8,000 YEARS</span><span class="dot">/</span>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 03B : THE WORLD (still montage) -->
+<section class="scene" id="scene-world" style="min-height:100vh;">
+    <div class="world-montage">
+        <span class="chapter-tag">THE WORLD OF STREET GODS</span>
+        <h2 class="scene-heading">Step into the streets.</h2>
+        <p class="deck-sub" style="max-width:660px;margin:0 auto 6px;text-align:center;">Chennai at night. The dogs, the feeders, the rescues, the fight for a life. This is the world the camera breathes.</p>
+        <div class="world-strip" style="grid-template-columns:repeat(4,1fr);gap:18px;">
+            <div class="world-tile"><img src="assets/stills/opt/night-blackdog-street.jpg" alt="Night in Chennai"><div class="tile-cap">Night in Chennai</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/day-feeding-two-women.jpg" alt="Vaccination Day"><div class="tile-cap">Vaccination Day</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/night-rickshaw-feed.jpg" alt="The night round"><div class="tile-cap">The night round</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/shelter-yard.jpg" alt="The shelter"><div class="tile-cap">The shelter</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/protest-community.jpg" alt="The Fight"><div class="tile-cap">The Fight</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/night-dogs-crossing.jpg" alt="They own the night"><div class="tile-cap">They own the night</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/protest-mic.jpg" alt="The Goal"><div class="tile-cap">The Goal</div></div>
+            <div class="world-tile"><img src="assets/stills/opt/intimate-tattoo-hand.jpg" alt="The look of love"><div class="tile-cap">The look of love</div></div>
+        </div>
+        <p class="deck-sub" style="text-align:center;font-style:italic;margin-top:14px;">Eight thousand years on these streets. The film opens its door here.</p>
+    </div>
+</section>
+
+<!-- SLIDE 04 : THE JOURNEY BEGINS -->
+<section class="scene" id="scene-origin">
+    <div class="scatter-dog anim-tilt" style="top:7%;left:2%;width:116px;"><img src="assets/dogs/dog-02-tilt.png"></div>
+    <div class="scatter-dog anim-float" style="bottom:6%;right:2%;width:108px;"><img src="assets/dogs/dog-04-dachshund.png"></div>
+    <div class="why-col">
+        <span class="chapter-tag">SLIDE 04 &middot; THE JOURNEY BEGINS</span>
+        <div class="story-panel">
+            <div class="highlight-line" style="color:var(--blue);">December 5th, 2025.</div>
+            <div class="logon-text" style="font-family:var(--font-caveat);font-size:clamp(1.3rem,3.2vw,2rem);text-align:left;">My pug Brando ,  Mr.B ,  breathed his last in the arms of my family. Kidney failure. He was 10.</div>
+            <p>I picked up my camera because I had to put the grief somewhere. I went looking for the first person who had also loved Mr.B. That person was Cynthia Moses. Talking to her, I understood the film I was making was too small.</p>
+            <div class="highlight-line">This could not just be a letter to Brando. It had to be a love letter to every dog on every street.</div>
+        </div>
+        <div style="display:flex;justify-content:center;margin-top:6px;">
+            <div class="photo-panel rotate-right" style="margin:22px auto 0;max-width:560px;">
+                <img src="assets/stills/opt/brando-akash.jpg" alt="Akash and Brando on a couch by a wall of notes">
+                <div class="photo-cap"><b>MR.&nbsp;B</b> ,  my pug. The grief that became a camera, and then a love letter to every dog on every street.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 05 : THE FEEDER -->
+<section class="scene" id="scene-cynthia">
+    <div class="scatter-dog anim-wag" style="bottom:8%;right:5%;width:108px;"><img src="assets/dogs/dog-02-tilt.png"></div>
+    <div class="cynthia-grid">
+        <div class="cynthia-panel">
+            <span class="chapter-tag">SLIDE 05 &middot; THE FEEDERS</span>
+            <div class="big-num">Cynthia Moses</div>
+            <p>76 years old. Every night for 20 years.<br>11 PM to 2 AM, she rides a little scooter through Korattur, Chennai. Two buckets of food. Over 200 dogs.</p>
+            <p class="handwritten">She spread compassion as an answer to her own grief.</p>
+        </div>
+        <div class="dog-zone">
+            <div class="photo-panel" style="max-width:640px;margin:0 auto;">
+                <img src="assets/stills/opt/cynthia-night-feeding.jpg" alt="Cynthia feeding street dogs at night by her red scooter" style="width:100%;">
+                <div class="photo-cap"><b>CYNTHIA&nbsp;MOSES</b> ,  11 PM to 2 AM. Her scooter, two buckets, over two hundred dogs. Compassion, as an answer to her own grief.</div>
+            </div>
+            <div class="photo-panel rotate-none" style="max-width:560px;margin:16px auto 0;">
+                <img src="assets/stills/opt/cynthia-bowls-floor.jpg" alt="Cynthia preparing the night feed across her kitchen floor" style="width:100%;">
+                <div class="photo-cap">Every night, from her kitchen, it begins.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 06 : THE OPPOSITE TRUTH -->
+<section class="scene" id="scene-opposetruth">
+    <div class="story-band">
+        <span class="chapter-tag">SLIDE 06 &middot; THE OTHER SIDE OF THE STREET</span>
+        <h2 class="scene-heading" style="text-align:center;">No hero. No villain. Yet.</h2>
+        <div class="story-panel">
+            <div class="highlight-line" style="color:var(--blue);">The public safety side.</div>
+            <p>Their argument is nothing but facts. A child died of rabies in Delhi. In densely packed Indian neighbourhoods, children and the elderly live with a real threat. Countries have eliminated rabies within their borders; India has not. As long as the disease exists, they argue, dogs have no place in the middle of modern society.</p>
+            <div class="highlight-line" style="color:var(--red);">Fear is real. Misinformation burned.</div>
+            <p>Rabies kills. Deaths by bite are rare, but not zero. It is fear that drives some people to reach for the poison ,  and when it spreads unchecked, neighbourhood after neighbourhood turns against the very dogs a feeder has spent years caring for.</p>
+        </div>
+        <p class="deck-sub" style="text-align:center;">Animal activists vs. public safety. Neither side is wrong.</p>
+        <div style="display:flex;justify-content:center;margin-top:22px;">
+            <div class="photo-panel" style="max-width:540px;">
+                <img src="assets/stills/opt/protest-crowd.jpg" alt="A crowd gathered over street dog policy">
+                <div class="photo-cap"><b>THE FEAR IS REAL</b> ,  two legitimate truths, colliding on the same street.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 07 : THE CRISIS -->
+<section class="scene" id="scene-crisis">
+    <div class="scatter-dog anim-wobble" style="bottom:8%;left:4%;width:168px;"><img src="assets/dogs/dog-09-puppy.png"></div>
+    <div class="scatter-dog anim-float" style="top:12%;left:5%;width:152px;"><img src="assets/dogs/dog-03-sad.png"></div>
+    <div class="crisis-grid">
+        <div></div>
+        <div class="crisis-panel">
+            <span class="chapter-tag">SLIDE 07 &middot; THE CRISIS</span>
+            <div style="height:18px;"></div>
+            <div class="poison-box">
+                <div class="big-num">2,800</div>
+                <div class="poison-sub">Dogs illegally poisoned, dumped in open pits</div>
+            </div>
+            <p style="margin-top:26px;">The Supreme Court promised control. What followed was chaos.</p>
+            <p>My own family felt it. Our own street dogs, neutered, vaccinated, never aggressive ,  suddenly the whole neighbourhood demanded they be taken to the pounds.</p>
+            <p style="font-weight:700;text-decoration:underline;margin-top:12px;">I saw, first hand, how misinformation bakes into real fear.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 07B : THE VACCINATION GAP -->
+<section class="scene" id="scene-vaccine">
+    <div class="story-band">
+        <span class="chapter-tag">SLIDE 08 &middot; THE VACCINATION GAP</span>
+        <h2 class="scene-heading" style="text-align:center;">The cure exists. The will doesn&rsquo;t.</h2>
+        <div class="stat-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto;width:100%;">
+            <div class="panel panel-paper stat-panel"><div class="stat-num" data-target="70" data-suffix="%">0</div><div class="stat-label">Herd-immunity threshold (WHO)</div></div>
+            <div class="panel panel-red stat-panel"><div class="stat-num" data-target="34" data-suffix="%">0</div><div class="stat-label">Vaccination coverage achieved</div></div>
+            <div class="panel panel-blue stat-panel"><div class="stat-num" data-target="0.5" data-suffix="%" data-decimal="1">0</div><div class="stat-label">Of disease burden spent on dog vaccines</div></div>
+        </div>
+        <div class="story-panel" style="max-width:860px;margin:24px auto 0;">
+            <p>India never gets close to the 70% target at a national level. A national catch-vaccinate-release drive would require an estimated <b>1.1 million vaccinators</b> ,  infrastructure that does not exist. Investment in dog vaccination is under <b>0.5%</b> of the disease&rsquo;s economic burden. India carries about <b>36% of all global rabies deaths</b>.</p>
+            <div class="highlight-line" style="color:var(--green);margin-top:12px;">The proof it can work: Goa hit 70% coverage. Zero confirmed human rabies from 2018&ndash;2023.</div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 09 : THREE CAMPS -->
+<section class="scene" id="scene-voices">
+    <div class="voices-wrap">
+        <span class="chapter-tag">SLIDE 09 &middot; THE THREE CAMPS</span>
+        <h2 class="scene-heading" style="text-align:center;margin-bottom:26px;">Three camps. Three truths.</h2>
+        <div class="voice-panels">
+            <div class="panel panel-red voice-panel">
+            <div class="voice-chip" style="flex-direction:column;margin-bottom:8px;"><img src="assets/stills/opt/cynthia-night-feeding.jpg" alt="Animal activists"></div>
+
+                <h3>ANIMAL ACTIVISTS</h3>
+                <p>The Feeders &amp; the rescuers. Dogs are part of this land just as much as we are. Compassion, every night.</p>
+            </div>
+            <div class="panel panel-dark voice-panel">
+            <div class="voice-chip" style="flex-direction:column;margin-bottom:8px;"><img src="assets/stills/opt/night-blackdog-street.jpg" alt="Public safety activists"></div>
+
+                <h3 style="color:var(--red);">PUBLIC SAFETY ACTIVISTS</h3>
+                <p>The Mirror. Street dogs carry disease and fear. Their argument is nothing but facts.</p>
+            </div>
+            <div class="panel panel-blue voice-panel">
+            <div class="voice-chip" style="flex-direction:column;margin-bottom:8px;"><img src="assets/stills/opt/shelter-yard.jpg" alt="Municipal bodies"></div>
+
+                <h3>MUNICIPAL BODIES</h3>
+                <p>The Machinery. Underfunded, understaffed, tangled in red tape. Not villains ,  victims of bureaucracy.</p>
+            </div>
+        </div>
+        <div style="margin:22px auto 0;display:flex;justify-content:center;align-items:flex-end;gap:20px;">
+            <div class="dog-char dog-md anim-wag"><img src="assets/dogs/dog-04-dachshund.png" alt="Street dog"></div>
+            <div class="dog-char dog-md anim-float"><img src="assets/dogs/dog-07-droopy.png" alt="Street dog"></div>
+        </div>
+        <p style="margin-top:22px;opacity:0.62;font-family:var(--font-caveat);font-size:clamp(1.3rem,3.2vw,2rem);line-height:1.4;">No villain. Just fear, on every side. No easy answers.</p>
+    </div>
+</section>
+
+<!-- SLIDE 09 : ARTISTIC VISION -->
+<section class="scene" id="scene-vision">
+    <div class="film-grid">
+        <div class="film-copy">
+            <span class="chapter-tag">SLIDE 10 &middot; ARTISTIC VISION</span>
+            <h2 class="film-heading">CINEMA VERITE.</h2>
+            <div class="film-panel">
+                <p>No tripods. No formal setups.</p>
+                <p>The camera moves the way the dogs move.</p>
+                <p class="accent">It observes. It follows. It lingers.</p>
+            </div>
+            <p class="film-notes">A constant invisible presence. I get things wrong on camera. I change my mind. No talking heads, only conversations. Retro Tamil music and the warmth of a flamenco guitar carry the chaos and tenderness of Chennai&rsquo;s streets. The film ends where it began: quiet, personal. And a walk through a Decathlon with Brando.</p>
+        </div>
+        <div class="film-art">
+            <div class="world-strip vision-strip" style="grid-template-columns:repeat(1,1fr);max-width:480px;gap:16px;margin:0 auto;">
+                <div class="world-tile" style="box-shadow:6px 6px 0 var(--ink);"><img src="assets/stills/opt/vet-treatment.jpg" alt="A vet tends to a dog after a rescue" style="height:200px;"><div class="tile-cap">The clinic</div></div>
+                <div class="world-tile" style="box-shadow:6px 6px 0 var(--ink);"><img src="assets/stills/opt/shelter-bluecage.jpg" alt="A rescued dog behind blue cage bars" style="height:200px;"><div class="tile-cap">The rescue</div></div>
+                <div class="world-tile" style="box-shadow:6px 6px 0 var(--ink);"><img src="assets/stills/opt/night-alley-rest.jpg" alt="A dog resting in a night alley" style="height:200px;"><div class="tile-cap">The alley</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 10 : THE FILMMAKER -->
+<section class="scene" id="scene-filmmaker">
+    <div class="story-band">
+        <span class="chapter-tag">SLIDE 11 &middot; THE FILMMAKER</span>
+        <div class="story-panel">
+            <div class="highlight-line" style="color:var(--blue);">Who am I, and why me?</div>
+            <p>I fell in love with cinema when my dad put on a VCD of Titanic when I was 10. I studied cinematography at the Madras Film Institute. Eight years across Tamil, Telugu and Hindi feature films, in the cinematography crews of PC Sreeram, Yamini Yagnamurthy, Sivakumar Vijayan and Sethu Sriram ,  from assistant to camera operator.</p>
+            <p>I dismissed documentaries as a lesser art. Then COVID struck. Baraka, Samsara, Chronos and Koyaanisqatsi, back to back, with my editor and best friend Aswin. Reality is indeed stranger than fiction. The seed was planted.</p>
+            <div class="highlight-line" style="color:var(--red);">I did not go looking for this story. A seed planted years ago finally bore fruit. It was time I picked up my camera.</div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 11 : KEY CREATIVE TEAM -->
+<section class="scene" id="scene-team">
+    <div class="deck-center">
+        <span class="chapter-tag">SLIDE 12 &middot; KEY CREATIVE TEAM</span>
+        <h2 class="scene-heading">The hands on the film.</h2>
+        <div class="team-grid">
+            <div class="panel panel-dark team-card">
+                <div class="team-name">Akash Girish</div>
+                <div class="team-role">Director &middot; Cinematographer &middot; Producer</div>
+                <p>D.F.Tech, Madras Film Institute. 8 years across Indian features. First non-fiction film. Believes cinema is a conglomeration of arts.</p>
+            </div>
+            <div class="panel panel-red team-card">
+                <div class="team-name">Aswin Nair</div>
+                <div class="team-role" style="color:var(--blue);">Editor</div>
+                <p>8 years across Tamil, Malayalam, Hindi, Kannada cinema. Madras Film Institute alumnus. Not just an editor ,  a writer, because he weaves the narrative.</p>
+            </div>
+            <div class="panel panel-blue team-card">
+                <div class="team-name">Avikal Shrivastava</div>
+                <div class="team-role">Sound Designer</div>
+                <p>Madras Film Institute alumnus. Production sound mixer on Hindi projects, live-audio expert. Studio in Mumbai, ready to craft the chaos of Chennai&rsquo;s streets.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 12 : TIMELINE & STATUS -->
+<section class="scene" id="scene-timeline">
+    <div class="deck-center">
+        <span class="chapter-tag">SLIDE 13 &middot; THE JOURNEY &amp; STATUS</span>
+        <h2 class="scene-heading">This film is real. It is moving.</h2>
+        <div class="tl-wrap" style="max-width:960px;margin:0 auto;width:100%;">
+            <div class="timeline-row">
+                <div class="tl-col done">
+                    <h3>DONE</h3>
+                    <p><span class="tl-flag">WHEN</span>Development &middot; Dec 2025 &rarr; Jan 2026</p>
+                    <p><span class="tl-flag">FILMED</span>Phase 1 Photography, Chennai &middot; Jan &rarr; May 2026</p>
+                    <p><span class="tl-flag">READY</span>17-minute sample cut ,  available on request</p>
+                </div>
+                <div class="tl-col now">
+                    <h3>NOW</h3>
+                    <p><span class="tl-flag">IN PROGRESS</span>Phase 2 Research &amp; Development, All India &middot; Jul 2026 &rarr; Feb 2027</p>
+                </div>
+                <div class="tl-col next">
+                    <h3>NEXT</h3>
+                    <p><span class="tl-flag">SHOOT</span>Phase 2 Photography &middot; Mar &rarr; Apr 2027</p>
+                    <p><span class="tl-flag">EDIT</span>Editing &middot; Apr &rarr; Sep 2027</p>
+                    <p><span class="tl-flag">POST</span>Post Production &middot; Sep &rarr; Dec 2027</p>
+                    <p><span class="tl-flag">RELEASE</span>January 2028</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 13 : THE BUDGET -->
+<section class="scene" id="scene-budget">
+    <div class="deck-center">
+        <span class="chapter-tag">SLIDE 14 &middot; THE BUDGET</span>
+        <h2 class="scene-heading">The money. Honest, of it.</h2>
+        <div class="budget-rows">
+            <div class="budget-row total"><div class="b-label">TOTAL BUDGET (Doc-Commune / PSBT)</div><div class="b-val">&#8377;1,09,54,900</div></div>
+            <div class="budget-row funded"><div class="b-label">SELF-INVESTED to date (Akash Girish)</div><div class="b-val">&#8377;2,00,000</div></div>
+            <div class="budget-row"><div class="b-label">PSBT Doc-Commune grant (requested)</div><div class="b-val">&#8377;2,00,500</div></div>
+            <div class="budget-row"><div class="b-label">Co-production / broadcaster / markets (to raise)</div><div class="b-val">&#8377;1,05,54,400</div></div>
+        </div>
+        <div class="ask-grid">
+            <div class="ask-item"><span class="a-label">A. Above the Line / Development (incl. fundraising travel)</span><span class="a-val">&#8377;19,63,000</span></div>
+            <div class="ask-item"><span class="a-label">B. Below the Line / Production (Chennai + Telangana)</span><span class="a-val">&#8377;19,66,000</span></div>
+            <div class="ask-item"><span class="a-label">C. Post-Production (incl. subtitles, accessibility)</span><span class="a-val">&#8377;30,85,000</span></div>
+            <div class="ask-item"><span class="a-label">D. Music &amp; Rights</span><span class="a-val">&#8377;7,50,000</span></div>
+            <div class="ask-item"><span class="a-label">E. Administration &amp; Overhead</span><span class="a-val">&#8377;4,75,000</span></div>
+            <div class="ask-item"><span class="a-label">F. Outreach, Festivals, Markets &amp; Distribution</span><span class="a-val">&#8377;17,20,000</span></div>
+            <div class="ask-item"><span class="a-label">Contingency (10%)</span><span class="a-val">&#8377;9,95,900</span></div>
+            <div class="ask-item"><span class="a-label">Subtotal (A&ndash;F)</span><span class="a-val">&#8377;99,59,000</span></div>
+        </div>
+        <p class="budget-sub">Only people&rsquo;s payments carry exact values. Production and equipment costs are working estimates under a 10% contingency ,  honest to Indian ground reality.</p>
+    </div>
+</section>
+
+<!-- SLIDE 14 : FINANCING & REACH -->
+<section class="scene" id="scene-fiance">
+    <div class="story-band">
+        <span class="chapter-tag">SLIDE 15 &middot; FINANCING &amp; REACH</span>
+        <h2 class="scene-heading" style="text-align:center;">Where it&rsquo;s funded, where it&rsquo;ll go.</h2>
+        <div class="story-panel">
+            <div class="highlight-line" style="color:var(--blue);">Target funding sources</div>
+            <div class="source-list">
+                <div>PSBT Doc-Commune</div>
+                <div>Sundance Documentary Fund 2028</div>
+                <div>IDFA Bertha Fund Classic</div>
+                <div>Doha Film Institute Documentary Fund</div>
+                <div>Ford Foundation JustFilms</div>
+                <div>Open Society Documentary Fund</div>
+                <div>Doc Society</div>
+                <div>European co-producers ,  ARTE &middot; ZDF &middot; NHK</div>
+                <div>DocEdge Kolkata &bull; WAVES Doc Bazaar</div>
+            </div>
+        </div>
+        <div class="story-panel">
+            <div class="highlight-line" style="color:var(--red);">Where it lands</div>
+            <p>The story is local; the issue is global. World premiere held for an international festival ,  then grassroots. A streaming partner and a television rights partner bring it to the interiors of India. Community screenings in the places where dog or man has been harmed by the other. Nothing coast. No easy answers.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 15 : INTENDED IMPACT -->
+<section class="scene" id="scene-impact">
+    <div class="scatter-dog anim-wobble" style="bottom:5%;left:2%;width:112px;"><img src="assets/dogs/dog-03-sad.png"></div>
+    <div class="hope-content">
+        <span class="chapter-tag">SLIDE 16 &middot; INTENDED IMPACT</span>
+        <p style="font-family:var(--font-marker);font-size:clamp(1.4rem,3.6vw,2.3rem);margin-top:18px;">Eliminate two diseases.</p>
+        <div class="impact-words">
+            <span class="impact-word red">RABIES</span>
+            <span class="impact-word red amp">&amp;</span>
+            <span class="impact-word blue">FEAR</span>
+        </div>
+        <p>India needs to up its vaccination and sterilization drive. Once rabies is gone, the epidemic of fear will gradually ease.</p>
+        <p class="handwritten-final" style="color:var(--red);">The fight can be won by a power Mr.B had.</p>
+        <div class="love-box"><div class="love-box-title">The power of love.</div></div>
+        <p style="font-family:var(--font-comic);margin-top:14px;">Cinema cannot, alone, change a thing. It can start a discussion. That is the first step.</p>
+    </div>
+</section>
+
+<!-- SLIDE 15B : THE SAMPLE -->
+<section class="epilogue-section" id="scene-sample" style="padding:70px 5vw;">
+    <div class="epilogue-box">
+        <span class="chapter-tag">THE SAMPLE</span>
+        <h2 class="scene-heading" style="text-align:center;">See it. Then trust it.</h2>
+        <p class="deck-sub" style="text-align:center;max-width:560px;margin:0 auto;">Seventeen minutes of the real film ,  no pitch first, just the streets, the dogs, and the woman who feeds them at 11.</p>
+        <div class="sample-cta" style="margin-top:20px;">
+            <div class="sample-box">
+                <h3 style="font-family:var(--font-marker);font-size:clamp(1.3rem,3.6vw,2.2rem);color:var(--red);">17-MINUTE SAMPLE</h3>
+                <div class="sample-actions">
+                    <a class="btn-ink btn-red" href="https://youtu.be/at2uaKYJ0-E" target="_blank" rel="noopener">Watch on YouTube</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 16 : CLOSE / CONTACT -->
+<section class="epilogue-section" id="scene-close">
+    <div class="epilogue-box">
+        <span class="chapter-tag">SLIDE 16 &middot; CONTACT</span>
+        <div class="contact-photo" style="margin:0 auto 22px;max-width:360px;width:100%;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transform:rotate(-1.2deg);">
+            <img src="assets/stills/akash-brando-selfie.jpg" alt="Akash Girish with his pug Brando" style="display:block;width:100%;height:auto;border:3px solid var(--ink);">
+        </div>
+        <div class="contact-subbox" style="max-width:520px;margin:0 auto;">
+            <div class="contact-name">AKASH GIRISH</div>
+            <p style="font-family:var(--font-comic);font-size:clamp(0.9rem,2.2vw,1.2rem);letter-spacing:0.08em;opacity:1;color:var(--ink);">Director &middot; Cinematographer &middot; Producer &middot; Mr.B Films</p>
+            <p style="font-family:var(--font-hand);font-size:clamp(0.85rem,1.9vw,1rem);margin-top:8px;opacity:.85;">akashgirish08@gmail.com &middot; +91 73959 43014 &middot; Chennai, India</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ JAVASCRIPT ============ -->
+<script>
+// =============== OLD SCROLL TEXTURE GENERATOR (dynamic, scroll-linked) ===============
+(function() {
+    const canvas = document.getElementById('scrollTexture');
+    const ctx = canvas.getContext('2d');
+    const grain = document.getElementById('grainCanvas');
+    const gctx = grain ? grain.getContext('2d') : null;
+    const FOLD_SPEED = 0.08; // parchment drifts against scroll = old-scroll feel
+    let lastTexW = 0, lastTexH = 0;
+
+    function generateTexture() {
+        const pageHeight = Math.max(document.body.scrollHeight, window.innerHeight);
+        const vh = window.innerHeight;
+        const w = window.innerWidth;
+        // Cap DPR: a full-resolution page-height canvas blocks mobile long enough to feel frozen
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+        // Canvas is one viewport (+ buffer) taller than the page so it can slide with scroll without gaps
+        canvas.width = w * dpr;
+        canvas.height = (pageHeight + vh + 80) * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = (pageHeight + vh + 80) + 'px';
+        lastTexW = w;
+        lastTexH = pageHeight + vh + 80;
+
+        const cw = canvas.width;
+        const ch = canvas.height;
+
+        // Base parchment color (fast, sync ,  page shows instantly)
+        ctx.fillStyle = '#E8DBC5';
+        ctx.fillRect(0, 0, cw, ch);
+
+        // --- Large scale warm gradients ,  staged ONE PER FRAME so nothing blocks ---
+        const numGradients = 12;
+        let gi = 0;
+        function nextGradient() {
+            if (gi >= numGradients) { drawFoldsAndBands(); return; }
+            const gx = Math.random() * cw;
+            const gy = Math.random() * ch;
+            const gr = Math.max(cw, ch) * (0.15 + Math.random() * 0.25);
+            const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+            const warmth = Math.random();
+            if (warmth < 0.4) {
+                grad.addColorStop(0, 'rgba(210, 190, 160, 0.25)');
+                grad.addColorStop(1, 'rgba(210, 190, 160, 0)');
+            } else if (warmth < 0.7) {
+                grad.addColorStop(0, 'rgba(180, 155, 120, 0.18)');
+                grad.addColorStop(1, 'rgba(180, 155, 120, 0)');
+            } else {
+                grad.addColorStop(0, 'rgba(230, 215, 185, 0.2)');
+                grad.addColorStop(1, 'rgba(230, 215, 185, 0)');
+            }
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, cw, ch);
+            gi++;
+            requestAnimationFrame(nextGradient);
+        }
+
+        // --- Crumpled fold lines + broad crease bands, then the noise pass ---
+        function drawFoldsAndBands() {
+            const numFolds = Math.floor(ch / 150) + 12;
+            for (let i = 0; i < numFolds; i++) {
+                ctx.save();
+                const startX = Math.random() * cw;
+                const startY = Math.random() * ch;
+                const length = (100 + Math.random() * 400) * dpr;
+                const angle = (Math.random() - 0.5) * Math.PI * 0.8;
+
+                // Shadow side of fold
+                ctx.strokeStyle = 'rgba(140, 120, 90, 0.18)';
+                ctx.lineWidth = (1 + Math.random() * 2) * dpr;
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                let px = startX, py = startY;
+                const segments = 3 + Math.floor(Math.random() * 4);
+                for (let s = 0; s < segments; s++) {
+                    px += Math.cos(angle + (Math.random() - 0.5) * 0.5) * (length / segments);
+                    py += Math.sin(angle + (Math.random() - 0.5) * 0.5) * (length / segments);
+                    ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+
+                // Highlight side (offset slightly)
+                ctx.strokeStyle = 'rgba(255, 245, 220, 0.14)';
+                ctx.lineWidth = 1 * dpr;
+                ctx.beginPath();
+                px = startX + 2 * dpr;
+                py = startY + 2 * dpr;
+                ctx.moveTo(px, py);
+                for (let s = 0; s < segments; s++) {
+                    px += Math.cos(angle + (Math.random() - 0.5) * 0.5) * (length / segments);
+                    py += Math.sin(angle + (Math.random() - 0.5) * 0.5) * (length / segments);
+                    ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            const numBands = Math.floor(ch / 700) + 5;
+            for (let i = 0; i < numBands; i++) {
+                const by = Math.random() * ch;
+                const bw = 120 + Math.random() * 260;
+
+                const g1 = ctx.createLinearGradient(0, by, 0, by + bw);
+                g1.addColorStop(0, 'rgba(140,115,85,0)');
+                g1.addColorStop(0.5, 'rgba(140,115,85,0.15)');
+                g1.addColorStop(1, 'rgba(140,115,85,0)');
+                ctx.fillStyle = g1;
+                ctx.fillRect(0, by, cw, bw);
+
+                const g2 = ctx.createLinearGradient(0, by + bw, 0, by + bw + 70);
+                g2.addColorStop(0, 'rgba(255,244,220,0.12)');
+                g2.addColorStop(1, 'rgba(255,244,220,0)');
+                ctx.fillStyle = g2;
+                ctx.fillRect(0, by + bw, cw, 70);
+
+                ctx.strokeStyle = 'rgba(120,95,65,0.13)';
+                ctx.lineWidth = 1.2 * dpr;
+                ctx.beginPath();
+                for (let x = 0; x <= cw; x += 8 * dpr) {
+                    const y = by + Math.sin(x * 0.004 + i * 2.1) * 14;
+                    if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+
+            startNoise();
+        }
+
+        function drawPatina() {
+        // --- Age stains (sepia/brown spots) ---
+        const numStains = Math.floor(pageHeight / 300) + 5;
+        for (let i = 0; i < numStains; i++) {
+            const sx = Math.random() * cw;
+            const sy = Math.random() * ch;
+            const sr = (30 + Math.random() * 80) * dpr;
+
+            const stainGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr);
+            const stainType = Math.random();
+            if (stainType < 0.5) {
+                stainGrad.addColorStop(0, 'rgba(160, 130, 90, 0.12)');
+                stainGrad.addColorStop(0.5, 'rgba(160, 130, 90, 0.06)');
+                stainGrad.addColorStop(1, 'rgba(160, 130, 90, 0)');
+            } else {
+                stainGrad.addColorStop(0, 'rgba(120, 90, 60, 0.08)');
+                stainGrad.addColorStop(1, 'rgba(120, 90, 60, 0)');
+            }
+            ctx.fillStyle = stainGrad;
+            ctx.beginPath();
+            ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // --- Worn/torn edges ---
+        const edgeWidth = Math.min(cw * 0.06, 60 * dpr);
+
+        // Left edge
+        for (let y = 0; y < ch; y += 4 * dpr) {
+            const depth = edgeWidth * (0.5 + Math.random() * 0.5);
+            const grad = ctx.createLinearGradient(0, y, depth, y);
+            grad.addColorStop(0, 'rgba(100, 75, 45, 0.25)');
+            grad.addColorStop(0.5, 'rgba(140, 110, 75, 0.12)');
+            grad.addColorStop(1, 'rgba(140, 110, 75, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, y, depth, 4 * dpr);
+        }
+
+        // Right edge
+        for (let y = 0; y < ch; y += 4 * dpr) {
+            const depth = edgeWidth * (0.5 + Math.random() * 0.5);
+            const grad = ctx.createLinearGradient(cw - depth, y, cw, y);
+            grad.addColorStop(0, 'rgba(140, 110, 75, 0)');
+            grad.addColorStop(0.5, 'rgba(140, 110, 75, 0.12)');
+            grad.addColorStop(1, 'rgba(100, 75, 45, 0.25)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(cw - depth, y, depth, 4 * dpr);
+        }
+
+        // Top edge
+        for (let x = 0; x < cw; x += 4 * dpr) {
+            const depth = edgeWidth * (0.4 + Math.random() * 0.4);
+            const grad = ctx.createLinearGradient(x, 0, x, depth);
+            grad.addColorStop(0, 'rgba(110, 80, 50, 0.2)');
+            grad.addColorStop(1, 'rgba(140, 110, 75, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(x, 0, 4 * dpr, depth);
+        }
+
+        // Bottom edge
+        for (let x = 0; x < cw; x += 4 * dpr) {
+            const depth = edgeWidth * (0.4 + Math.random() * 0.4);
+            const grad = ctx.createLinearGradient(x, ch - depth, x, ch);
+            grad.addColorStop(0, 'rgba(140, 110, 75, 0)');
+            grad.addColorStop(1, 'rgba(110, 80, 50, 0.2)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(x, ch - depth, 4 * dpr, depth);
+        }
+
+        // --- Irregular edge tears (notches) ---
+        const numTears = Math.floor(pageHeight / 250) + 4;
+        for (let i = 0; i < numTears; i++) {
+            const side = Math.random() < 0.5 ? 'left' : 'right';
+            const ty = Math.random() * ch;
+            const tw = (10 + Math.random() * 25) * dpr;
+            const th = (15 + Math.random() * 30) * dpr;
+
+            ctx.fillStyle = 'rgba(90, 65, 40, 0.15)';
+            ctx.beginPath();
+            if (side === 'left') {
+                ctx.moveTo(0, ty);
+                ctx.lineTo(tw, ty + th * 0.3);
+                ctx.lineTo(0, ty + th);
+            } else {
+                ctx.moveTo(cw, ty);
+                ctx.lineTo(cw - tw, ty + th * 0.3);
+                ctx.lineTo(cw, ty + th);
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // --- Small dark specks (dirt/age dots) ---
+        const numSpecks = Math.floor(pageHeight / 50) + 30;
+        for (let i = 0; i < numSpecks; i++) {
+            const sx = Math.random() * cw;
+            const sy = Math.random() * ch;
+            const sr = Math.random() * 1.5 * dpr + 0.5;
+            ctx.fillStyle = 'rgba(80, 60, 40, ' + (0.1 + Math.random() * 0.2) + ')';
+            ctx.beginPath();
+            ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    // --- Progressive paper noise: per-band, so no giant pixel allocation blocks the page ---
+    function startNoise() {
+        const bandH = 420;
+        let band = 0;
+        const totalBands = Math.ceil(ch / bandH);
+        function nextNoiseBand() {
+            const y0 = band * bandH;
+            const y1 = Math.min(ch, y0 + bandH);
+            const bandImg = ctx.getImageData(0, y0, cw, y1 - y0);
+            const d = bandImg.data;
+            for (let i = 0; i < d.length; i += 4) {
+                const n = (Math.random() - 0.5) * 18;
+                d[i] = Math.max(0, Math.min(255, d[i] + n));
+                d[i + 1] = Math.max(0, Math.min(255, d[i + 1] + n));
+                d[i + 2] = Math.max(0, Math.min(255, d[i + 2] + n));
+            }
+            ctx.putImageData(bandImg, 0, y0);
+            band++;
+            if (band < totalBands) {
+                requestAnimationFrame(nextNoiseBand);
+            } else {
+                drawPatina();
+            }
+        }
+        nextNoiseBand();
+    }
+
+    // Kick off the staged pipeline: gradients -> folds/bands -> noise -> patina
+    nextGradient();
+    }
+
+    // Generate on load and on resize (debounced)
+    generateTexture();
+
+    // Only regenerate if the page actually changed size (fonts/images can shift it)
+    function texNeedsRegen() {
+        const ph = Math.max(document.body.scrollHeight, window.innerHeight);
+        return lastTexW !== window.innerWidth || lastTexH !== ph + window.innerHeight + 80;
+    }
+
+    // Regenerate on resize (debounced)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(generateTexture, 300);
+    });
+
+    // Regenerate after images/fonts load ONLY if the page size changed
+    window.addEventListener('load', () => {
+        setTimeout(() => { if (texNeedsRegen()) generateTexture(); }, 300);
+    });
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => { if (texNeedsRegen()) generateTexture(); });
+    }
+
+    // --- Scroll-linked drift: the parchment slides slower than the page ---
+    function applyScroll() {
+        const y = (window.scrollY || window.pageYOffset || 0) * FOLD_SPEED;
+        canvas.style.transform = 'translate3d(0,' + (-y) + 'px,0)';
+    }
+    window.addEventListener('scroll', applyScroll, { passive: true });
+    document.addEventListener('scroll', applyScroll, { passive: true });
+
+    // --- LIVE GRAIN: subtle animated paper speckle ---
+    if (grain && gctx) {
+        const gw = 180, gh = 180;
+        grain.width = gw;
+        grain.height = gh;
+        const imgData = gctx.createImageData(gw, gh);
+        function tickGrain() {
+            const d = imgData.data;
+            for (let i = 0; i < d.length; i += 4) {
+                const v = 90 + Math.random() * 70;
+                d[i] = d[i + 1] = d[i + 2] = v;
+                d[i + 3] = 255;
+            }
+            gctx.putImageData(imgData, 0, 0);
+        }
+        tickGrain();
+        setInterval(tickGrain, 380);
+    }
+})();
+
+// --- LOADER ---
+(function() {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => loader.style.display = 'none', 500);
+    }, 1500);
+})();
+
+// --- SCROLL DRIP ---
+window.addEventListener('scroll', () => {
+    const st = window.scrollY;
+    const dh = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = dh > 0 ? (st / dh) * 100 : 0;
+    document.getElementById('scrollDrip').style.width = pct + '%';
+}, { passive: true });
+
+// --- MARQUEE: constant ticker speed on every screen (px/s), smooth GPU layer ---
+(function() {
+    const track = document.querySelector('.marquee-track');
+    if (!track) return;
+    function setDur() {
+        const half = track.scrollWidth / 2;
+        if (half > 0) track.style.setProperty('--marquee-dur', Math.max(8, (half / 80).toFixed(1)) + 's');
+    }
+    setDur();
+    window.addEventListener('load', setDur);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setDur);
+})();
+
+
+// --- DECK SCENE TINTS ---
+const tints = {
+    'cover':'transparent',
+    'scene-logon':'rgba(247,241,227,0)',
+    'scene-why':'rgba(222,203,172,0.62)',
+    'scene-numbers':'rgba(222,203,172,0.5)',
+    'scene-origin':'rgba(247,241,227,0)',
+    'scene-cynthia':'rgba(42,95,143,0.75)',
+    'scene-opposetruth':'rgba(222,203,172,0.45)',
+    'scene-crisis':'rgba(200,57,46,0.78)',
+    'scene-vaccine':'rgba(45,107,79,0.72)',
+    'scene-voices':'rgba(45,107,79,0.5)',
+    'scene-vision':'rgba(247,241,227,0)',
+    'scene-filmmaker':'rgba(222,203,172,0.3)',
+    'scene-team':'rgba(42,95,143,0.2)',
+    'scene-timeline':'rgba(247,241,227,0)',
+    'scene-budget':'rgba(26,26,26,0.82)',
+    'scene-fiance':'rgba(222,203,172,0.4)',
+    'scene-impact':'rgba(247,241,227,0)',
+    'scene-world':'rgba(42,95,143,0.12)',
+    'scene-sample':'rgba(42,95,143,0.78)',
+    'scene-close':'rgba(42,95,143,0.78)'
+};
+Object.entries(tints).forEach(([id,color])=>{
+    const el = document.getElementById(id); if(!el) return;
+    const isTrailing = id==='scene-close';
+    ScrollTrigger.create({
+        trigger: el,
+        start: isTrailing ? ()=>Math.max(0,document.documentElement.scrollHeight-window.innerHeight-120) : 'top 50%',
+        end: isTrailing ? ()=>document.documentElement.scrollHeight : 'bottom 50%',
+        onEnter: ()=>{ const t=document.getElementById('paperTint'); if(t) t.style.background=color; },
+        onEnterBack: ()=>{ const t=document.getElementById('paperTint'); if(t) t.style.background=color; }
+    });
+});
+
+// --- COVER DOGS: parallax ---
+const coverDogs = document.querySelectorAll('#cover .cover-dog');
+coverDogs.forEach((dog,i)=>{
+    const depth = i===0||i===4 ? -60 : i===1||i===3 ? -35 : -15;
+    gsap.to(dog,{ y:depth, ease:'none', scrollTrigger:{ trigger:'#cover', start:'top top', end:'bottom top', scrub:0.5 } });
+});
+gsap.to('.cover-title',{ scale:0.92, opacity:0.3, ease:'none', scrollTrigger:{ trigger:'#cover', start:'top top', end:'bottom top', scrub:0.5 } });
+gsap.to('.cover-subtitle, .cover-credits',{ opacity:0, ease:'none', scrollTrigger:{ trigger:'#cover', start:'top top', end:'40% top', scrub:0.5 } });
+
+// --- DECK SCENE PANELS: slide-in ---
+function slide(sel, trigger, y, stagger){
+    gsap.from(sel,{ opacity:0, y:y||40, stagger:stagger||0.1, duration:0.7, ease:'power3.out',
+        scrollTrigger:{ trigger:trigger, start:'top 68%', toggleActions:'play none none none', once:true } });
+}
+slide('#scene-logon .logon-cover > *','#scene-logon',30,0.08);
+slide('#scene-why .why-card','#scene-why',40,0.1);
+slide('#scene-why .telangana-callout','#scene-why',30,0);
+slide('#scene-numbers .panel','#scene-numbers',50,0.08);
+slide('#scene-numbers .scene-heading','#scene-numbers',-60,0);
+slide('#scene-origin .story-panel','#scene-origin',40,0);
+slide('#scene-cynthia .cynthia-panel > *','#scene-cynthia',30,0.08);
+slide('#scene-cynthia .photo-panel','#scene-cynthia',60,0.1);
+slide('#scene-opposetruth .story-panel','#scene-opposetruth',40,0);
+slide('#scene-crisis .big-num','#scene-crisis',0,0);
+slide('#scene-crisis .crisis-panel > *','#scene-crisis',40,0.08);
+slide('#scene-voices .voice-panel','#scene-voices',40,0.12);
+slide('#scene-vision .film-copy > *','#scene-vision',30,0.08);
+slide('#scene-vision .film-art > *','#scene-vision',40,0.12);
+slide('#scene-filmmaker .story-panel','#scene-filmmaker',40,0);
+slide('#scene-team .team-card','#scene-team',40,0.12);
+slide('#scene-timeline .tl-col','#scene-timeline',40,0.1);
+slide('#scene-budget .budget-row','#scene-budget',40,0.08);
+slide('#scene-budget .ask-item','#scene-budget',30,0.05);
+slide('#scene-fiance .story-panel','#scene-fiance',40,0.08);
+slide('#scene-impact .hope-content > *','#scene-impact',30,0.06);
+slide('#scene-world .world-tile','#scene-world',40,0.09);
+slide('#scene-world .scene-heading,#scene-world .deck-sub','#scene-world',30,0);
+slide('#scene-sample .epilogue-box > *','#scene-sample',30,0.08);
+slide('#scene-close > *','#scene-close',30,0.08);
+
+// --- STAT COUNTERS ---
+gsap.utils.toArray('.stat-num').forEach(el => {
+    ScrollTrigger.create({
+        trigger: el.closest('.panel') || el,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+            const target = parseFloat(el.dataset.target);
+            const suffix = el.dataset.suffix || '';
+            const decimal = parseInt(el.dataset.decimal) || 0;
+            const duration = 2000;
+            const startTime = performance.now();
+            function update() {
+                const elapsed = performance.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = (target * eased).toFixed(decimal) + suffix;
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            update();
+        }
+    });
+});
+
+// --- PET DOGS ---
+document.querySelectorAll('.dog-char').forEach(el => {
+    el.addEventListener('click', function() {
+        this.classList.add('petted');
+        const img = this.querySelector('img');
+        if (img) gsap.fromTo(img, { filter: 'brightness(1)' }, { filter: 'brightness(1.3)', duration: 0.1, yoyo: true, repeat: 1 });
+        setTimeout(() => this.classList.remove('petted'), 500);
+    });
+});
+
+// --- SCATTER DOGS: parallax ---
+document.querySelectorAll('.scatter-dog').forEach(dog => {
+    const speed = 0.3 + Math.random() * 0.4;
+    gsap.to(dog, {
+        y: -(60 + Math.random() * 60),
+        ease: 'none',
+        scrollTrigger: { trigger: dog.closest('section'), start: 'top bottom', end: 'bottom top', scrub: speed }
+    });
+});
+
+ScrollTrigger.refresh();
+
+// --- RELIABILITY: re-measure once fonts/images have finished loading ---
+window.addEventListener('load', () => {
+    setTimeout(() => ScrollTrigger.refresh(), 600);
+});
+if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => ScrollTrigger.refresh());
+}
+</script>
+
+</body>
+</html>
